@@ -235,6 +235,42 @@ export type Database = {
         }
         Relationships: []
       }
+      payment_events: {
+        Row: {
+          amount: number | null
+          currency: string | null
+          event_type: string
+          id: string
+          paystack_event_id: string | null
+          processed_at: string
+          raw: Json
+          reference: string | null
+          user_id: string | null
+        }
+        Insert: {
+          amount?: number | null
+          currency?: string | null
+          event_type: string
+          id?: string
+          paystack_event_id?: string | null
+          processed_at?: string
+          raw: Json
+          reference?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number | null
+          currency?: string | null
+          event_type?: string
+          id?: string
+          paystack_event_id?: string | null
+          processed_at?: string
+          raw?: Json
+          reference?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       presets: {
         Row: {
           background_upscale: boolean | null
@@ -372,12 +408,183 @@ export type Database = {
           },
         ]
       }
+      subscription_plans: {
+        Row: {
+          created_at: string
+          description: string | null
+          features: Json
+          id: string
+          is_active: boolean
+          monthly_images: number
+          monthly_jobs: number
+          monthly_loras: number
+          name: string
+          paystack_plan_code_ngn: string | null
+          paystack_plan_code_usd: string | null
+          price_ngn_kobo: number
+          price_usd_cents: number
+          priority_queue: boolean
+          slug: string
+          sort_order: number
+          updated_at: string
+          watermark: boolean
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          features?: Json
+          id?: string
+          is_active?: boolean
+          monthly_images?: number
+          monthly_jobs?: number
+          monthly_loras?: number
+          name: string
+          paystack_plan_code_ngn?: string | null
+          paystack_plan_code_usd?: string | null
+          price_ngn_kobo?: number
+          price_usd_cents?: number
+          priority_queue?: boolean
+          slug: string
+          sort_order?: number
+          updated_at?: string
+          watermark?: boolean
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          features?: Json
+          id?: string
+          is_active?: boolean
+          monthly_images?: number
+          monthly_jobs?: number
+          monthly_loras?: number
+          name?: string
+          paystack_plan_code_ngn?: string | null
+          paystack_plan_code_usd?: string | null
+          price_ngn_kobo?: number
+          price_usd_cents?: number
+          priority_queue?: boolean
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+          watermark?: boolean
+        }
+        Relationships: []
+      }
+      usage_counters: {
+        Row: {
+          created_at: string
+          id: string
+          images_generated: number
+          jobs_processed: number
+          loras_trained: number
+          period_start: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          images_generated?: number
+          jobs_processed?: number
+          loras_trained?: number
+          period_start: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          images_generated?: number
+          jobs_processed?: number
+          loras_trained?: number
+          period_start?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_subscriptions: {
+        Row: {
+          cancel_at_period_end: boolean
+          created_at: string
+          currency: string
+          current_period_end: string | null
+          current_period_start: string | null
+          id: string
+          paystack_customer_code: string | null
+          paystack_email_token: string | null
+          paystack_subscription_code: string | null
+          plan_slug: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cancel_at_period_end?: boolean
+          created_at?: string
+          currency?: string
+          current_period_end?: string | null
+          current_period_start?: string | null
+          id?: string
+          paystack_customer_code?: string | null
+          paystack_email_token?: string | null
+          paystack_subscription_code?: string | null
+          plan_slug?: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cancel_at_period_end?: boolean
+          created_at?: string
+          currency?: string
+          current_period_end?: string | null
+          current_period_start?: string | null
+          id?: string
+          paystack_customer_code?: string | null
+          paystack_email_token?: string | null
+          paystack_subscription_code?: string | null
+          plan_slug?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_subscriptions_plan_slug_fkey"
+            columns: ["plan_slug"]
+            isOneToOne: false
+            referencedRelation: "subscription_plans"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_or_create_usage_counter: {
+        Args: { _user_id: string }
+        Returns: {
+          created_at: string
+          id: string
+          images_generated: number
+          jobs_processed: number
+          loras_trained: number
+          period_start: string
+          updated_at: string
+          user_id: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "usage_counters"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      get_user_plan: { Args: { _user_id: string }; Returns: string }
     }
     Enums: {
       [_ in never]: never
