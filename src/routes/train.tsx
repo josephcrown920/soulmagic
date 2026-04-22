@@ -101,6 +101,7 @@ function Train() {
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
+      <UpgradeBanner kind="loras" />
       <div>
         <h1 className="text-2xl font-bold">Train a LoRA</h1>
         <p className="text-sm text-muted-foreground">
