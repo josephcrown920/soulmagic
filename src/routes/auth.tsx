@@ -28,17 +28,29 @@ function AuthPage() {
     setBusy(true);
     try {
       if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: { emailRedirectTo: window.location.origin + "/studio" },
         });
         if (error) throw error;
-        toast.success("Account created. You're in.");
+        if (data.session) {
+          toast.success("Account created. You're in.");
+          nav({ to: "/studio" });
+        } else {
+          toast.success("Account created — check your email to confirm, then sign in.");
+          setMode("signin");
+        }
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
+        if (error) {
+          if (error.message.toLowerCase().includes("invalid login")) {
+            throw new Error("Wrong email or password. New here? Tap 'Create one' below.");
+          }
+          throw error;
+        }
         toast.success("Welcome back");
+        nav({ to: "/studio" });
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Something went wrong";
