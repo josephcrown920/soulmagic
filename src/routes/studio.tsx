@@ -90,15 +90,26 @@ function Studio() {
           .upload(path, file, { upsert: false });
         if (upErr) throw upErr;
 
-        const { error: insErr } = await supabase.from("jobs").insert({
-          user_id: user.id,
-          preset_id: presetId || null,
-          source_filename: file.name,
-          input_path: path,
-          status: "pending",
-          progress: 0,
-        });
+        const { data: jobRow, error: insErr } = await supabase
+          .from("jobs")
+          .insert({
+            user_id: user.id,
+            preset_id: presetId || null,
+            source_filename: file.name,
+            input_path: path,
+            status: "pending",
+            progress: 0,
+          })
+          .select("id")
+          .single();
         if (insErr) throw insErr;
+
+        // Fire & forget — start processing on Replicate
+        if (jobRow?.id) {
+          supabase.functions
+            .invoke("process-video", { body: { jobId: jobRow.id } })
+            .catch((e) => console.error("process-video kickoff", e));
+        }
       }
       toast.success(`Queued ${files.length} video${files.length > 1 ? "s" : ""}`);
       setFiles([]);
