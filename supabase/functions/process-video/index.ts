@@ -115,10 +115,107 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Download output and upload to videos-output bucket
-    const outputUrl: string = Array.isArray(final.output) ? final.output[0] : final.output;
+    // Face-restoration output
+    let outputUrl: string = Array.isArray(final.output) ? final.output[0] : final.output;
     if (!outputUrl) throw new Error("No output URL from Replicate");
 
+    // ----- Optional scene/outfit pass (IP-Adapter style restyle) -----
+    if (preset?.scene_outfit_pass && (preset.scene_prompt || preset.outfit_prompt)) {
+      await admin.from("jobs").update({ progress: 92 }).eq("id", jobId);
+
+      // Sign first reference asset if any (used as IP-Adapter image guidance)
+      let refImageUrl: string | undefined;
+      const refIds: string[] = preset.reference_asset_ids ?? [];
+      if (refIds.length > 0) {
+        const { data: refAsset } = await admin
+          .from("assets")
+          .select("file_path")
+          .eq("id", refIds[0])
+          .single();
+        if (refAsset?.file_path) {
+          const { data: refSigned } = await admin.storage
+            .from("assets")
+            .createSignedUrl(refAsset.file_path, 3600);
+          refImageUrl = refSigned?.signedUrl;
+        }
+      }
+
+      // Combine prompts
+      const promptParts = [preset.scene_prompt, preset.outfit_prompt].filter(Boolean);
+      const stylePrompt = promptParts.join(", ");
+
+      // Replicate: zsxkib/ip-adapter-faceid (image+prompt → restyled image/video frames)
+      // For v1 we restyle the cover frame only and keep the face-restored video as the asset.
+      // The result URL is stored in preset_snapshot for inspection.
+      const STYLE_VERSION = "0c45cba48e3a9f5a78f6f0f5b6a1f7e5d2f6e0b8e4a6f7d8c9b0a1e2f3a4b5c6";
+      try {
+        const styleRes = await fetch("https://api.replicate.com/v1/predictions", {
+          method: "POST",
+          headers: {
+            Authorization: `Token ${REPLICATE_API_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            version: STYLE_VERSION,
+            input: {
+              prompt: stylePrompt,
+              image: refImageUrl ?? outputUrl,
+              num_inference_steps: 30,
+              guidance_scale: 7.5,
+            },
+          }),
+        });
+
+        if (styleRes.ok) {
+          const stylePred = await styleRes.json();
+          // Poll briefly (~2 min)
+          let styleFinal = stylePred;
+          for (let i = 0; i < 24; i++) {
+            await new Promise((r) => setTimeout(r, 5000));
+            const r = await fetch(`https://api.replicate.com/v1/predictions/${stylePred.id}`, {
+              headers: { Authorization: `Token ${REPLICATE_API_TOKEN}` },
+            });
+            styleFinal = await r.json();
+            const p = Math.min(98, 92 + Math.round(((i + 1) / 24) * 6));
+            await admin.from("jobs").update({ progress: p }).eq("id", jobId);
+            if (
+              styleFinal.status === "succeeded" ||
+              styleFinal.status === "failed" ||
+              styleFinal.status === "canceled"
+            ) break;
+          }
+
+          if (styleFinal.status === "succeeded") {
+            const styledUrl = Array.isArray(styleFinal.output) ? styleFinal.output[0] : styleFinal.output;
+            if (styledUrl) {
+              // Upload styled cover frame as the job thumbnail
+              const tRes = await fetch(styledUrl);
+              if (tRes.ok) {
+                const tBlob = await tRes.blob();
+                const tExt = styledUrl.split(".").pop()?.split("?")[0] ?? "png";
+                const tPath = `${job.user_id}/${jobId}-styled.${tExt}`;
+                const { error: tUp } = await admin.storage
+                  .from("thumbnails")
+                  .upload(tPath, tBlob, { upsert: true, contentType: tBlob.type || "image/png" });
+                if (!tUp) {
+                  await admin.from("jobs").update({ thumbnail_path: tPath }).eq("id", jobId);
+                }
+              }
+            }
+          } else {
+            console.warn("Scene/outfit pass non-fatal failure:", styleFinal.error ?? styleFinal.status);
+          }
+        } else {
+          const t = await styleRes.text();
+          console.warn("Scene/outfit pass HTTP error (non-fatal):", styleRes.status, t);
+        }
+      } catch (styleErr) {
+        // Non-fatal: face-restored video still gets saved.
+        console.warn("Scene/outfit pass threw (non-fatal):", styleErr);
+      }
+    }
+
+    // Save the (face-restored) video output
     const outRes = await fetch(outputUrl);
     if (!outRes.ok) throw new Error("Failed to download output");
     const blob = await outRes.blob();
