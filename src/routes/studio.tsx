@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { Upload, Play, Loader2 } from "lucide-react";
 import { RequireAuth } from "@/components/RequireAuth";
+import { UpgradeBanner } from "@/components/UpgradeBanner";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
