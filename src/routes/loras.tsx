@@ -4,7 +4,6 @@ import { RequireAuth } from "@/components/RequireAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger,
@@ -94,7 +93,7 @@ function LoRACard({ lora, onDelete }: { lora: LoRA; onDelete: () => void }) {
   const statusIcon = {
     pending: <Clock className="h-4 w-4 text-muted-foreground" />,
     training: <Loader2 className="h-4 w-4 animate-spin text-primary" />,
-    ready: <CheckCircle2 className="h-4 w-4 text-emerald-500" />,
+    ready: <CheckCircle2 className="h-4 w-4 text-success" />,
     failed: <AlertCircle className="h-4 w-4 text-destructive" />,
   }[lora.status] ?? null;
 
@@ -213,8 +212,3 @@ function GenerateDialog({ loraId }: { loraId: string }) {
   );
 }
 
-function Input({ ...props }: React.InputHTMLAttributes<HTMLInputElement>) {
-  // unused placeholder import
-  return <input {...props} />;
-}
-void Input;
