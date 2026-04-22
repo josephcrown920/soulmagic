@@ -14,7 +14,256 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      assets: {
+        Row: {
+          created_at: string
+          file_path: string
+          id: string
+          kind: string
+          name: string
+          tags: string[] | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          file_path: string
+          id?: string
+          kind: string
+          name: string
+          tags?: string[] | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          file_path?: string
+          id?: string
+          kind?: string
+          name?: string
+          tags?: string[] | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      jobs: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          duration_seconds: number | null
+          error_message: string | null
+          id: string
+          input_path: string
+          output_path: string | null
+          preset_id: string | null
+          preset_snapshot: Json | null
+          progress: number | null
+          replicate_prediction_id: string | null
+          source_filename: string
+          status: string
+          thumbnail_path: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          duration_seconds?: number | null
+          error_message?: string | null
+          id?: string
+          input_path: string
+          output_path?: string | null
+          preset_id?: string | null
+          preset_snapshot?: Json | null
+          progress?: number | null
+          replicate_prediction_id?: string | null
+          source_filename: string
+          status?: string
+          thumbnail_path?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          duration_seconds?: number | null
+          error_message?: string | null
+          id?: string
+          input_path?: string
+          output_path?: string | null
+          preset_id?: string | null
+          preset_snapshot?: Json | null
+          progress?: number | null
+          replicate_prediction_id?: string | null
+          source_filename?: string
+          status?: string
+          thumbnail_path?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "jobs_preset_id_fkey"
+            columns: ["preset_id"]
+            isOneToOne: false
+            referencedRelation: "presets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      luts: {
+        Row: {
+          created_at: string
+          file_path: string
+          id: string
+          name: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          file_path: string
+          id?: string
+          name: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          file_path?: string
+          id?: string
+          name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      presets: {
+        Row: {
+          background_upscale: boolean | null
+          contrast: number | null
+          created_at: string
+          description: string | null
+          face_model: string | null
+          face_ref_id: string | null
+          face_strength: number | null
+          id: string
+          is_default: boolean | null
+          lut_id: string | null
+          name: string
+          outfit_prompt: string | null
+          reference_asset_ids: string[] | null
+          saturation: number | null
+          scene_prompt: string | null
+          sharpness: number | null
+          skin_smoothing: number | null
+          updated_at: string
+          user_id: string
+          warmth: number | null
+        }
+        Insert: {
+          background_upscale?: boolean | null
+          contrast?: number | null
+          created_at?: string
+          description?: string | null
+          face_model?: string | null
+          face_ref_id?: string | null
+          face_strength?: number | null
+          id?: string
+          is_default?: boolean | null
+          lut_id?: string | null
+          name: string
+          outfit_prompt?: string | null
+          reference_asset_ids?: string[] | null
+          saturation?: number | null
+          scene_prompt?: string | null
+          sharpness?: number | null
+          skin_smoothing?: number | null
+          updated_at?: string
+          user_id: string
+          warmth?: number | null
+        }
+        Update: {
+          background_upscale?: boolean | null
+          contrast?: number | null
+          created_at?: string
+          description?: string | null
+          face_model?: string | null
+          face_ref_id?: string | null
+          face_strength?: number | null
+          id?: string
+          is_default?: boolean | null
+          lut_id?: string | null
+          name?: string
+          outfit_prompt?: string | null
+          reference_asset_ids?: string[] | null
+          saturation?: number | null
+          scene_prompt?: string | null
+          sharpness?: number | null
+          skin_smoothing?: number | null
+          updated_at?: string
+          user_id?: string
+          warmth?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "presets_face_ref_id_fkey"
+            columns: ["face_ref_id"]
+            isOneToOne: false
+            referencedRelation: "assets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "presets_lut_id_fkey"
+            columns: ["lut_id"]
+            isOneToOne: false
+            referencedRelation: "luts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          accent_color: string | null
+          created_at: string
+          default_preset_id: string | null
+          display_name: string | null
+          id: string
+          notifications_enabled: boolean | null
+          output_format: string | null
+          output_resolution: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          accent_color?: string | null
+          created_at?: string
+          default_preset_id?: string | null
+          display_name?: string | null
+          id?: string
+          notifications_enabled?: boolean | null
+          output_format?: string | null
+          output_resolution?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          accent_color?: string | null
+          created_at?: string
+          default_preset_id?: string | null
+          display_name?: string | null
+          id?: string
+          notifications_enabled?: boolean | null
+          output_format?: string | null
+          output_resolution?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_default_preset_fk"
+            columns: ["default_preset_id"]
+            isOneToOne: false
+            referencedRelation: "presets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
