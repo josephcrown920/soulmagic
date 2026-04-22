@@ -20,6 +20,7 @@ import { Route as LibraryRouteImport } from './routes/library'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssetsRouteImport } from './routes/assets'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicHooksProcessQueueRouteImport } from './routes/api/public/hooks/process-queue'
 
 const VibeRoute = VibeRouteImport.update({
   id: '/vibe',
@@ -76,6 +77,12 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicHooksProcessQueueRoute =
+  ApiPublicHooksProcessQueueRouteImport.update({
+    id: '/api/public/hooks/process-queue',
+    path: '/api/public/hooks/process-queue',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -89,6 +96,7 @@ export interface FileRoutesByFullPath {
   '/studio': typeof StudioRoute
   '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
+  '/api/public/hooks/process-queue': typeof ApiPublicHooksProcessQueueRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -102,6 +110,7 @@ export interface FileRoutesByTo {
   '/studio': typeof StudioRoute
   '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
+  '/api/public/hooks/process-queue': typeof ApiPublicHooksProcessQueueRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -116,6 +125,7 @@ export interface FileRoutesById {
   '/studio': typeof StudioRoute
   '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
+  '/api/public/hooks/process-queue': typeof ApiPublicHooksProcessQueueRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,6 +141,7 @@ export interface FileRouteTypes {
     | '/studio'
     | '/train'
     | '/vibe'
+    | '/api/public/hooks/process-queue'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,6 +155,7 @@ export interface FileRouteTypes {
     | '/studio'
     | '/train'
     | '/vibe'
+    | '/api/public/hooks/process-queue'
   id:
     | '__root__'
     | '/'
@@ -157,6 +169,7 @@ export interface FileRouteTypes {
     | '/studio'
     | '/train'
     | '/vibe'
+    | '/api/public/hooks/process-queue'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -171,6 +184,7 @@ export interface RootRouteChildren {
   StudioRoute: typeof StudioRoute
   TrainRoute: typeof TrainRoute
   VibeRoute: typeof VibeRoute
+  ApiPublicHooksProcessQueueRoute: typeof ApiPublicHooksProcessQueueRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -252,6 +266,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/process-queue': {
+      id: '/api/public/hooks/process-queue'
+      path: '/api/public/hooks/process-queue'
+      fullPath: '/api/public/hooks/process-queue'
+      preLoaderRoute: typeof ApiPublicHooksProcessQueueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -267,6 +288,7 @@ const rootRouteChildren: RootRouteChildren = {
   StudioRoute: StudioRoute,
   TrainRoute: TrainRoute,
   VibeRoute: VibeRoute,
+  ApiPublicHooksProcessQueueRoute: ApiPublicHooksProcessQueueRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
