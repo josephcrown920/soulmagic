@@ -1,1 +1,7 @@
 project_id = "kikokqkwhhjxpdapusrq"
+
+[functions.vibe-match]
+verify_jwt = true
+
+[functions.process-video]
+verify_jwt = true
