@@ -38,11 +38,15 @@ type Preset = {
   skin_smoothing: number;
   outfit_prompt: string | null;
   scene_prompt: string | null;
+  lora_id: string | null;
 };
+
+type LoRAOption = { id: string; name: string; status: string };
 
 function Presets() {
   const { user } = useAuth();
   const [presets, setPresets] = useState<Preset[]>([]);
+  const [loras, setLoras] = useState<LoRAOption[]>([]);
   const [editing, setEditing] = useState<Preset | null>(null);
 
   const load = async () => {
@@ -52,6 +56,12 @@ function Presets() {
       .order("is_default", { ascending: false })
       .order("created_at", { ascending: false });
     setPresets((data ?? []) as Preset[]);
+    const { data: l } = await supabase
+      .from("loras")
+      .select("id, name, status")
+      .eq("status", "ready")
+      .order("created_at", { ascending: false });
+    setLoras((l ?? []) as LoRAOption[]);
   };
 
   useEffect(() => {
