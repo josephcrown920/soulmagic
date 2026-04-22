@@ -211,13 +211,27 @@ function Studio() {
           </div>
         ) : (
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {recent.map((j) => (
-              <div key={j.id} className="rounded-xl border border-border bg-card p-3 shadow-card">
-                <div className="aspect-video w-full rounded-md bg-muted" />
-                <div className="mt-2 truncate text-sm font-medium">{j.source_filename}</div>
-                <div className="text-xs capitalize text-muted-foreground">{j.status}</div>
-              </div>
-            ))}
+            {recent.map((j) => {
+              const thumb = j.thumbnail_path
+                ? supabase.storage.from("thumbnails").getPublicUrl(j.thumbnail_path).data.publicUrl
+                : null;
+              return (
+                <div key={j.id} className="rounded-xl border border-border bg-card p-3 shadow-card">
+                  <div className="aspect-video w-full overflow-hidden rounded-md bg-muted">
+                    {thumb && (
+                      <img
+                        src={thumb}
+                        alt={j.source_filename}
+                        loading="lazy"
+                        className="h-full w-full object-cover"
+                      />
+                    )}
+                  </div>
+                  <div className="mt-2 truncate text-sm font-medium">{j.source_filename}</div>
+                  <div className="text-xs capitalize text-muted-foreground">{j.status}</div>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
