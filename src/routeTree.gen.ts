@@ -14,12 +14,16 @@ import { Route as TrainRouteImport } from './routes/train'
 import { Route as StudioRouteImport } from './routes/studio'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as QueueRouteImport } from './routes/queue'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PresetsRouteImport } from './routes/presets'
 import { Route as LorasRouteImport } from './routes/loras'
 import { Route as LibraryRouteImport } from './routes/library'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssetsRouteImport } from './routes/assets'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicPaystackWebhookRouteImport } from './routes/api/public/paystack/webhook'
 import { Route as ApiPublicHooksProcessQueueRouteImport } from './routes/api/public/hooks/process-queue'
 
 const VibeRoute = VibeRouteImport.update({
@@ -47,6 +51,11 @@ const QueueRoute = QueueRouteImport.update({
   path: '/queue',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PresetsRoute = PresetsRouteImport.update({
   id: '/presets',
   path: '/presets',
@@ -62,6 +71,11 @@ const LibraryRoute = LibraryRouteImport.update({
   path: '/library',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -72,11 +86,22 @@ const AssetsRoute = AssetsRouteImport.update({
   path: '/assets',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicPaystackWebhookRoute =
+  ApiPublicPaystackWebhookRouteImport.update({
+    id: '/api/public/paystack/webhook',
+    path: '/api/public/paystack/webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicHooksProcessQueueRoute =
   ApiPublicHooksProcessQueueRouteImport.update({
     id: '/api/public/hooks/process-queue',
@@ -86,105 +111,133 @@ const ApiPublicHooksProcessQueueRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/assets': typeof AssetsRoute
   '/auth': typeof AuthRoute
+  '/contact': typeof ContactRoute
   '/library': typeof LibraryRoute
   '/loras': typeof LorasRoute
   '/presets': typeof PresetsRoute
+  '/pricing': typeof PricingRoute
   '/queue': typeof QueueRoute
   '/settings': typeof SettingsRoute
   '/studio': typeof StudioRoute
   '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
   '/api/public/hooks/process-queue': typeof ApiPublicHooksProcessQueueRoute
+  '/api/public/paystack/webhook': typeof ApiPublicPaystackWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/assets': typeof AssetsRoute
   '/auth': typeof AuthRoute
+  '/contact': typeof ContactRoute
   '/library': typeof LibraryRoute
   '/loras': typeof LorasRoute
   '/presets': typeof PresetsRoute
+  '/pricing': typeof PricingRoute
   '/queue': typeof QueueRoute
   '/settings': typeof SettingsRoute
   '/studio': typeof StudioRoute
   '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
   '/api/public/hooks/process-queue': typeof ApiPublicHooksProcessQueueRoute
+  '/api/public/paystack/webhook': typeof ApiPublicPaystackWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/assets': typeof AssetsRoute
   '/auth': typeof AuthRoute
+  '/contact': typeof ContactRoute
   '/library': typeof LibraryRoute
   '/loras': typeof LorasRoute
   '/presets': typeof PresetsRoute
+  '/pricing': typeof PricingRoute
   '/queue': typeof QueueRoute
   '/settings': typeof SettingsRoute
   '/studio': typeof StudioRoute
   '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
   '/api/public/hooks/process-queue': typeof ApiPublicHooksProcessQueueRoute
+  '/api/public/paystack/webhook': typeof ApiPublicPaystackWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/assets'
     | '/auth'
+    | '/contact'
     | '/library'
     | '/loras'
     | '/presets'
+    | '/pricing'
     | '/queue'
     | '/settings'
     | '/studio'
     | '/train'
     | '/vibe'
     | '/api/public/hooks/process-queue'
+    | '/api/public/paystack/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/assets'
     | '/auth'
+    | '/contact'
     | '/library'
     | '/loras'
     | '/presets'
+    | '/pricing'
     | '/queue'
     | '/settings'
     | '/studio'
     | '/train'
     | '/vibe'
     | '/api/public/hooks/process-queue'
+    | '/api/public/paystack/webhook'
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/assets'
     | '/auth'
+    | '/contact'
     | '/library'
     | '/loras'
     | '/presets'
+    | '/pricing'
     | '/queue'
     | '/settings'
     | '/studio'
     | '/train'
     | '/vibe'
     | '/api/public/hooks/process-queue'
+    | '/api/public/paystack/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   AssetsRoute: typeof AssetsRoute
   AuthRoute: typeof AuthRoute
+  ContactRoute: typeof ContactRoute
   LibraryRoute: typeof LibraryRoute
   LorasRoute: typeof LorasRoute
   PresetsRoute: typeof PresetsRoute
+  PricingRoute: typeof PricingRoute
   QueueRoute: typeof QueueRoute
   SettingsRoute: typeof SettingsRoute
   StudioRoute: typeof StudioRoute
   TrainRoute: typeof TrainRoute
   VibeRoute: typeof VibeRoute
   ApiPublicHooksProcessQueueRoute: typeof ApiPublicHooksProcessQueueRoute
+  ApiPublicPaystackWebhookRoute: typeof ApiPublicPaystackWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -224,6 +277,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QueueRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/presets': {
       id: '/presets'
       path: '/presets'
@@ -245,6 +305,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LibraryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -259,11 +326,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AssetsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/paystack/webhook': {
+      id: '/api/public/paystack/webhook'
+      path: '/api/public/paystack/webhook'
+      fullPath: '/api/public/paystack/webhook'
+      preLoaderRoute: typeof ApiPublicPaystackWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/hooks/process-queue': {
@@ -278,17 +359,21 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   AssetsRoute: AssetsRoute,
   AuthRoute: AuthRoute,
+  ContactRoute: ContactRoute,
   LibraryRoute: LibraryRoute,
   LorasRoute: LorasRoute,
   PresetsRoute: PresetsRoute,
+  PricingRoute: PricingRoute,
   QueueRoute: QueueRoute,
   SettingsRoute: SettingsRoute,
   StudioRoute: StudioRoute,
   TrainRoute: TrainRoute,
   VibeRoute: VibeRoute,
   ApiPublicHooksProcessQueueRoute: ApiPublicHooksProcessQueueRoute,
+  ApiPublicPaystackWebhookRoute: ApiPublicPaystackWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

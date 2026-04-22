@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { RequireAuth } from "@/components/RequireAuth";
+import { UpgradeBanner } from "@/components/UpgradeBanner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
@@ -100,6 +101,7 @@ function Train() {
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
+      <UpgradeBanner kind="loras" />
       <div>
         <h1 className="text-2xl font-bold">Train a LoRA</h1>
         <p className="text-sm text-muted-foreground">

@@ -16,6 +16,7 @@ import {
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/auth";
+import { usePlan } from "@/lib/use-plan";
 import { Button } from "@/components/ui/button";
 
 const NAV = [
@@ -33,6 +34,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const loc = useLocation();
   const nav = useNavigate();
   const { user, signOut } = useAuth();
+  const { plan } = usePlan();
   const [open, setOpen] = useState(false);
 
   const Sidebar = (
@@ -68,9 +70,24 @@ export function AppShell({ children }: { children: ReactNode }) {
         })}
       </nav>
       <div className="border-t border-sidebar-border p-3">
-        <div className="mb-2 truncate px-2 text-xs text-muted-foreground">
-          {user?.email}
-        </div>
+        <Link
+          to="/settings"
+          search={{ billing: "view" } as any}
+          onClick={() => setOpen(false)}
+          className="mb-2 flex items-center justify-between rounded-md px-2 py-1.5 text-xs transition-colors hover:bg-sidebar-accent/60"
+        >
+          <span className="truncate text-muted-foreground">{user?.email}</span>
+          {plan && (
+            <span className={cn(
+              "ml-2 shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider",
+              plan.slug === "free"
+                ? "bg-muted text-muted-foreground"
+                : "bg-gradient-primary text-primary-foreground shadow-elegant"
+            )}>
+              {plan.name}
+            </span>
+          )}
+        </Link>
         <Button
           variant="ghost"
           size="sm"
