@@ -39,14 +39,18 @@ type Preset = {
   outfit_prompt: string | null;
   scene_prompt: string | null;
   lora_id: string | null;
+  scene_outfit_pass: boolean;
+  reference_asset_ids: string[] | null;
 };
 
 type LoRAOption = { id: string; name: string; status: string };
+type AssetOption = { id: string; name: string; kind: string };
 
 function Presets() {
   const { user } = useAuth();
   const [presets, setPresets] = useState<Preset[]>([]);
   const [loras, setLoras] = useState<LoRAOption[]>([]);
+  const [assets, setAssets] = useState<AssetOption[]>([]);
   const [editing, setEditing] = useState<Preset | null>(null);
 
   const load = async () => {
@@ -62,6 +66,11 @@ function Presets() {
       .eq("status", "ready")
       .order("created_at", { ascending: false });
     setLoras((l ?? []) as LoRAOption[]);
+    const { data: a } = await supabase
+      .from("assets")
+      .select("id, name, kind")
+      .order("created_at", { ascending: false });
+    setAssets((a ?? []) as AssetOption[]);
   };
 
   useEffect(() => {
@@ -155,6 +164,7 @@ function Presets() {
         <Editor
           preset={editing}
           loras={loras}
+          assets={assets}
           onChange={(p) => setEditing(p)}
           onSave={save}
           onSetDefault={() => setDefault(editing.id)}
@@ -171,16 +181,22 @@ function Presets() {
 }
 
 function Editor({
-  preset, loras, onChange, onSave, onSetDefault, onDuplicate, onDelete,
+  preset, loras, assets, onChange, onSave, onSetDefault, onDuplicate, onDelete,
 }: {
   preset: Preset;
   loras: LoRAOption[];
+  assets: AssetOption[];
   onChange: (p: Preset) => void;
   onSave: () => void;
   onSetDefault: () => void;
   onDuplicate: () => void;
   onDelete: () => void;
 }) {
+  const refIds = preset.reference_asset_ids ?? [];
+  const toggleRef = (id: string) => {
+    const next = refIds.includes(id) ? refIds.filter((r) => r !== id) : [...refIds, id];
+    onChange({ ...preset, reference_asset_ids: next });
+  };
   const set = <K extends keyof Preset>(k: K, v: Preset[K]) =>
     onChange({ ...preset, [k]: v });
 
@@ -268,24 +284,72 @@ function Editor({
               </p>
             )}
           </div>
-          <div>
-            <Label>Outfit prompt</Label>
-            <Input
-              placeholder="black leather jacket, white tee"
-              value={preset.outfit_prompt ?? ""}
-              onChange={(e) => set("outfit_prompt", e.target.value)}
-            />
+
+          <div className="rounded-lg border border-border bg-background/40 p-3">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <Label className="text-sm">Scene / outfit pass</Label>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Runs an extra Replicate step after face restoration to restyle the
+                  scene & outfit using your prompts and reference assets. Costs more
+                  per clip and adds ~1–2 min.
+                </p>
+              </div>
+              <Switch
+                checked={preset.scene_outfit_pass}
+                onCheckedChange={(v) => set("scene_outfit_pass", v)}
+              />
+            </div>
           </div>
-          <div>
-            <Label>Scene prompt</Label>
-            <Input
-              placeholder="rooftop at golden hour, neon city below"
-              value={preset.scene_prompt ?? ""}
-              onChange={(e) => set("scene_prompt", e.target.value)}
-            />
-          </div>
-          <div className="text-xs text-muted-foreground">
-            Reference assets (face, car, actor) can be linked from the Assets page.
+
+          <div className={preset.scene_outfit_pass ? "" : "pointer-events-none opacity-50"}>
+            <div className="space-y-3">
+              <div>
+                <Label>Outfit prompt</Label>
+                <Input
+                  placeholder="black leather jacket, white tee"
+                  value={preset.outfit_prompt ?? ""}
+                  onChange={(e) => set("outfit_prompt", e.target.value)}
+                />
+              </div>
+              <div>
+                <Label>Scene prompt</Label>
+                <Input
+                  placeholder="rooftop at golden hour, neon city below"
+                  value={preset.scene_prompt ?? ""}
+                  onChange={(e) => set("scene_prompt", e.target.value)}
+                />
+              </div>
+              <div>
+                <Label>Reference assets</Label>
+                {assets.length === 0 ? (
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    No assets yet. Upload faces, outfits or scenes on the Assets page.
+                  </p>
+                ) : (
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {assets.map((a) => {
+                      const active = refIds.includes(a.id);
+                      return (
+                        <button
+                          type="button"
+                          key={a.id}
+                          onClick={() => toggleRef(a.id)}
+                          className={`rounded-full border px-3 py-1 text-xs transition-colors ${
+                            active
+                              ? "border-primary bg-primary/15 text-foreground"
+                              : "border-border bg-card/60 text-muted-foreground hover:bg-card"
+                          }`}
+                        >
+                          {a.name}
+                          <span className="ml-1 text-[10px] opacity-60">{a.kind}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </Section>

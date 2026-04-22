@@ -252,6 +252,7 @@ export type Database = {
           outfit_prompt: string | null
           reference_asset_ids: string[] | null
           saturation: number | null
+          scene_outfit_pass: boolean
           scene_prompt: string | null
           sharpness: number | null
           skin_smoothing: number | null
@@ -275,6 +276,7 @@ export type Database = {
           outfit_prompt?: string | null
           reference_asset_ids?: string[] | null
           saturation?: number | null
+          scene_outfit_pass?: boolean
           scene_prompt?: string | null
           sharpness?: number | null
           skin_smoothing?: number | null
@@ -298,6 +300,7 @@ export type Database = {
           outfit_prompt?: string | null
           reference_asset_ids?: string[] | null
           saturation?: number | null
+          scene_outfit_pass?: boolean
           scene_prompt?: string | null
           sharpness?: number | null
           skin_smoothing?: number | null
