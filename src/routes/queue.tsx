@@ -20,7 +20,7 @@ type Job = {
   id: string;
   source_filename: string;
   status: string;
-  progress: number;
+  progress: number | null;
   created_at: string;
   error_message: string | null;
 };

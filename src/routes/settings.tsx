@@ -23,9 +23,9 @@ export const Route = createFileRoute("/settings")({
 type Profile = {
   display_name: string | null;
   default_preset_id: string | null;
-  output_format: string;
-  output_resolution: string;
-  notifications_enabled: boolean;
+  output_format: string | null;
+  output_resolution: string | null;
+  notifications_enabled: boolean | null;
 };
 
 function Settings() {
@@ -103,7 +103,7 @@ function Settings() {
           <div>
             <Label>Output format</Label>
             <Select
-              value={profile.output_format}
+              value={profile.output_format ?? "mp4"}
               onValueChange={(v) => setProfile({ ...profile, output_format: v })}
             >
               <SelectTrigger><SelectValue /></SelectTrigger>
@@ -117,7 +117,7 @@ function Settings() {
           <div>
             <Label>Output resolution</Label>
             <Select
-              value={profile.output_resolution}
+              value={profile.output_resolution ?? "1080p"}
               onValueChange={(v) => setProfile({ ...profile, output_resolution: v })}
             >
               <SelectTrigger><SelectValue /></SelectTrigger>
@@ -136,7 +136,7 @@ function Settings() {
             <div className="text-xs text-muted-foreground">Toast + sound on job completion</div>
           </div>
           <Switch
-            checked={profile.notifications_enabled}
+            checked={profile.notifications_enabled ?? true}
             onCheckedChange={(v) => setProfile({ ...profile, notifications_enabled: v })}
           />
         </div>

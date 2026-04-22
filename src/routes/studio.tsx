@@ -19,12 +19,12 @@ export const Route = createFileRoute("/studio")({
   ),
 });
 
-type Preset = { id: string; name: string; is_default: boolean };
+type Preset = { id: string; name: string; is_default: boolean | null };
 type Job = {
   id: string;
   source_filename: string;
   status: string;
-  progress: number;
+  progress: number | null;
   created_at: string;
   thumbnail_path: string | null;
 };
