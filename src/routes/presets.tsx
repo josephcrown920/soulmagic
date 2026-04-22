@@ -154,6 +154,7 @@ function Presets() {
       {editing ? (
         <Editor
           preset={editing}
+          loras={loras}
           onChange={(p) => setEditing(p)}
           onSave={save}
           onSetDefault={() => setDefault(editing.id)}
