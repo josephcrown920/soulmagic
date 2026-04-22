@@ -44,6 +44,39 @@ export type Database = {
         }
         Relationships: []
       }
+      generated_images: {
+        Row: {
+          created_at: string
+          file_path: string
+          height: number | null
+          id: string
+          lora_id: string | null
+          prompt: string
+          user_id: string
+          width: number | null
+        }
+        Insert: {
+          created_at?: string
+          file_path: string
+          height?: number | null
+          id?: string
+          lora_id?: string | null
+          prompt: string
+          user_id: string
+          width?: number | null
+        }
+        Update: {
+          created_at?: string
+          file_path?: string
+          height?: number | null
+          id?: string
+          lora_id?: string | null
+          prompt?: string
+          user_id?: string
+          width?: number | null
+        }
+        Relationships: []
+      }
       jobs: {
         Row: {
           completed_at: string | null
@@ -109,6 +142,75 @@ export type Database = {
           },
         ]
       }
+      loras: {
+        Row: {
+          base_model: string | null
+          completed_at: string | null
+          created_at: string
+          error_message: string | null
+          id: string
+          kind: string
+          name: string
+          preview_path: string | null
+          progress: number | null
+          replicate_model_name: string | null
+          replicate_model_owner: string | null
+          replicate_training_id: string | null
+          replicate_version_id: string | null
+          status: string
+          training_image_paths: string[] | null
+          training_steps: number | null
+          trigger_word: string | null
+          updated_at: string
+          user_id: string
+          weights_url: string | null
+        }
+        Insert: {
+          base_model?: string | null
+          completed_at?: string | null
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          kind?: string
+          name: string
+          preview_path?: string | null
+          progress?: number | null
+          replicate_model_name?: string | null
+          replicate_model_owner?: string | null
+          replicate_training_id?: string | null
+          replicate_version_id?: string | null
+          status?: string
+          training_image_paths?: string[] | null
+          training_steps?: number | null
+          trigger_word?: string | null
+          updated_at?: string
+          user_id: string
+          weights_url?: string | null
+        }
+        Update: {
+          base_model?: string | null
+          completed_at?: string | null
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          kind?: string
+          name?: string
+          preview_path?: string | null
+          progress?: number | null
+          replicate_model_name?: string | null
+          replicate_model_owner?: string | null
+          replicate_training_id?: string | null
+          replicate_version_id?: string | null
+          status?: string
+          training_image_paths?: string[] | null
+          training_steps?: number | null
+          trigger_word?: string | null
+          updated_at?: string
+          user_id?: string
+          weights_url?: string | null
+        }
+        Relationships: []
+      }
       luts: {
         Row: {
           created_at: string
@@ -144,6 +246,7 @@ export type Database = {
           face_strength: number | null
           id: string
           is_default: boolean | null
+          lora_id: string | null
           lut_id: string | null
           name: string
           outfit_prompt: string | null
@@ -166,6 +269,7 @@ export type Database = {
           face_strength?: number | null
           id?: string
           is_default?: boolean | null
+          lora_id?: string | null
           lut_id?: string | null
           name: string
           outfit_prompt?: string | null
@@ -188,6 +292,7 @@ export type Database = {
           face_strength?: number | null
           id?: string
           is_default?: boolean | null
+          lora_id?: string | null
           lut_id?: string | null
           name?: string
           outfit_prompt?: string | null

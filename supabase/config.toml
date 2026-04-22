@@ -1,1 +1,7 @@
 project_id = "guivxjcnxgkhpfhsjqbl"
+
+[functions.train-lora]
+verify_jwt = false
+
+[functions.generate-image]
+verify_jwt = true

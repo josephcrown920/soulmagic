@@ -11,6 +11,7 @@ import {
   LogOut,
   Menu,
   X,
+  Brain,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -22,6 +23,7 @@ const NAV = [
   { to: "/queue", label: "Queue", icon: ListVideo },
   { to: "/library", label: "Library", icon: Library },
   { to: "/presets", label: "Presets", icon: Sparkles },
+  { to: "/loras", label: "LoRAs", icon: Brain },
   { to: "/vibe", label: "Vibe Matcher", icon: Wand2 },
   { to: "/assets", label: "Assets", icon: Images },
   { to: "/settings", label: "Settings", icon: Settings },

@@ -10,10 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VibeRouteImport } from './routes/vibe'
+import { Route as TrainRouteImport } from './routes/train'
 import { Route as StudioRouteImport } from './routes/studio'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as QueueRouteImport } from './routes/queue'
 import { Route as PresetsRouteImport } from './routes/presets'
+import { Route as LorasRouteImport } from './routes/loras'
 import { Route as LibraryRouteImport } from './routes/library'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssetsRouteImport } from './routes/assets'
@@ -22,6 +24,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const VibeRoute = VibeRouteImport.update({
   id: '/vibe',
   path: '/vibe',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrainRoute = TrainRouteImport.update({
+  id: '/train',
+  path: '/train',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StudioRoute = StudioRouteImport.update({
@@ -42,6 +49,11 @@ const QueueRoute = QueueRouteImport.update({
 const PresetsRoute = PresetsRouteImport.update({
   id: '/presets',
   path: '/presets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LorasRoute = LorasRouteImport.update({
+  id: '/loras',
+  path: '/loras',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LibraryRoute = LibraryRouteImport.update({
@@ -70,10 +82,12 @@ export interface FileRoutesByFullPath {
   '/assets': typeof AssetsRoute
   '/auth': typeof AuthRoute
   '/library': typeof LibraryRoute
+  '/loras': typeof LorasRoute
   '/presets': typeof PresetsRoute
   '/queue': typeof QueueRoute
   '/settings': typeof SettingsRoute
   '/studio': typeof StudioRoute
+  '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
 }
 export interface FileRoutesByTo {
@@ -81,10 +95,12 @@ export interface FileRoutesByTo {
   '/assets': typeof AssetsRoute
   '/auth': typeof AuthRoute
   '/library': typeof LibraryRoute
+  '/loras': typeof LorasRoute
   '/presets': typeof PresetsRoute
   '/queue': typeof QueueRoute
   '/settings': typeof SettingsRoute
   '/studio': typeof StudioRoute
+  '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
 }
 export interface FileRoutesById {
@@ -93,10 +109,12 @@ export interface FileRoutesById {
   '/assets': typeof AssetsRoute
   '/auth': typeof AuthRoute
   '/library': typeof LibraryRoute
+  '/loras': typeof LorasRoute
   '/presets': typeof PresetsRoute
   '/queue': typeof QueueRoute
   '/settings': typeof SettingsRoute
   '/studio': typeof StudioRoute
+  '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
 }
 export interface FileRouteTypes {
@@ -106,10 +124,12 @@ export interface FileRouteTypes {
     | '/assets'
     | '/auth'
     | '/library'
+    | '/loras'
     | '/presets'
     | '/queue'
     | '/settings'
     | '/studio'
+    | '/train'
     | '/vibe'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -117,10 +137,12 @@ export interface FileRouteTypes {
     | '/assets'
     | '/auth'
     | '/library'
+    | '/loras'
     | '/presets'
     | '/queue'
     | '/settings'
     | '/studio'
+    | '/train'
     | '/vibe'
   id:
     | '__root__'
@@ -128,10 +150,12 @@ export interface FileRouteTypes {
     | '/assets'
     | '/auth'
     | '/library'
+    | '/loras'
     | '/presets'
     | '/queue'
     | '/settings'
     | '/studio'
+    | '/train'
     | '/vibe'
   fileRoutesById: FileRoutesById
 }
@@ -140,10 +164,12 @@ export interface RootRouteChildren {
   AssetsRoute: typeof AssetsRoute
   AuthRoute: typeof AuthRoute
   LibraryRoute: typeof LibraryRoute
+  LorasRoute: typeof LorasRoute
   PresetsRoute: typeof PresetsRoute
   QueueRoute: typeof QueueRoute
   SettingsRoute: typeof SettingsRoute
   StudioRoute: typeof StudioRoute
+  TrainRoute: typeof TrainRoute
   VibeRoute: typeof VibeRoute
 }
 
@@ -154,6 +180,13 @@ declare module '@tanstack/react-router' {
       path: '/vibe'
       fullPath: '/vibe'
       preLoaderRoute: typeof VibeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/train': {
+      id: '/train'
+      path: '/train'
+      fullPath: '/train'
+      preLoaderRoute: typeof TrainRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/studio': {
@@ -182,6 +215,13 @@ declare module '@tanstack/react-router' {
       path: '/presets'
       fullPath: '/presets'
       preLoaderRoute: typeof PresetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/loras': {
+      id: '/loras'
+      path: '/loras'
+      fullPath: '/loras'
+      preLoaderRoute: typeof LorasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/library': {
@@ -220,10 +260,12 @@ const rootRouteChildren: RootRouteChildren = {
   AssetsRoute: AssetsRoute,
   AuthRoute: AuthRoute,
   LibraryRoute: LibraryRoute,
+  LorasRoute: LorasRoute,
   PresetsRoute: PresetsRoute,
   QueueRoute: QueueRoute,
   SettingsRoute: SettingsRoute,
   StudioRoute: StudioRoute,
+  TrainRoute: TrainRoute,
   VibeRoute: VibeRoute,
 }
 export const routeTree = rootRouteImport

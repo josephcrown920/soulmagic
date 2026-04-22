@@ -38,11 +38,15 @@ type Preset = {
   skin_smoothing: number;
   outfit_prompt: string | null;
   scene_prompt: string | null;
+  lora_id: string | null;
 };
+
+type LoRAOption = { id: string; name: string; status: string };
 
 function Presets() {
   const { user } = useAuth();
   const [presets, setPresets] = useState<Preset[]>([]);
+  const [loras, setLoras] = useState<LoRAOption[]>([]);
   const [editing, setEditing] = useState<Preset | null>(null);
 
   const load = async () => {
@@ -52,6 +56,12 @@ function Presets() {
       .order("is_default", { ascending: false })
       .order("created_at", { ascending: false });
     setPresets((data ?? []) as Preset[]);
+    const { data: l } = await supabase
+      .from("loras")
+      .select("id, name, status")
+      .eq("status", "ready")
+      .order("created_at", { ascending: false });
+    setLoras((l ?? []) as LoRAOption[]);
   };
 
   useEffect(() => {
@@ -144,6 +154,7 @@ function Presets() {
       {editing ? (
         <Editor
           preset={editing}
+          loras={loras}
           onChange={(p) => setEditing(p)}
           onSave={save}
           onSetDefault={() => setDefault(editing.id)}
@@ -160,9 +171,10 @@ function Presets() {
 }
 
 function Editor({
-  preset, onChange, onSave, onSetDefault, onDuplicate, onDelete,
+  preset, loras, onChange, onSave, onSetDefault, onDuplicate, onDelete,
 }: {
   preset: Preset;
+  loras: LoRAOption[];
   onChange: (p: Preset) => void;
   onSave: () => void;
   onSetDefault: () => void;
@@ -236,6 +248,26 @@ function Editor({
 
       <Section title="Scene & identity (optional)">
         <div className="space-y-3">
+          <div>
+            <Label>LoRA (your trained model)</Label>
+            <Select
+              value={preset.lora_id ?? "none"}
+              onValueChange={(v) => set("lora_id", v === "none" ? null : v)}
+            >
+              <SelectTrigger><SelectValue placeholder="No LoRA" /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="none">No LoRA</SelectItem>
+                {loras.map((l) => (
+                  <SelectItem key={l.id} value={l.id}>{l.name}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {loras.length === 0 && (
+              <p className="mt-1 text-xs text-muted-foreground">
+                No trained LoRAs yet. Train one on the LoRAs page.
+              </p>
+            )}
+          </div>
           <div>
             <Label>Outfit prompt</Label>
             <Input
