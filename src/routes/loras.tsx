@@ -11,7 +11,7 @@ import {
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
-import { Brain, Plus, Trash2, Sparkles, Loader2, CheckCircle2, AlertCircle, Clock } from "lucide-react";
+import { Brain, Plus, Trash2, Sparkles, Loader2, CheckCircle2, AlertCircle, Clock, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/loras")({
@@ -90,12 +90,28 @@ function Loras() {
 }
 
 function LoRACard({ lora, onDelete }: { lora: LoRA; onDelete: () => void }) {
+  const [syncing, setSyncing] = useState(false);
   const statusIcon = {
     pending: <Clock className="h-4 w-4 text-muted-foreground" />,
     training: <Loader2 className="h-4 w-4 animate-spin text-primary" />,
     ready: <CheckCircle2 className="h-4 w-4 text-success" />,
     failed: <AlertCircle className="h-4 w-4 text-destructive" />,
   }[lora.status] ?? null;
+
+  const sync = async () => {
+    setSyncing(true);
+    try {
+      const { error } = await supabase.functions.invoke("sync-lora-status", {
+        body: { loraId: lora.id },
+      });
+      if (error) throw error;
+      toast.success("Status refreshed");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Could not sync");
+    } finally {
+      setSyncing(false);
+    }
+  };
 
   return (
     <div className="space-y-3 rounded-2xl border border-border bg-card p-5 shadow-card">
@@ -106,9 +122,16 @@ function LoRACard({ lora, onDelete }: { lora: LoRA; onDelete: () => void }) {
             {lora.kind} · trigger: <code className="text-foreground">{lora.trigger_word ?? "—"}</code>
           </div>
         </div>
-        <Button size="icon" variant="ghost" onClick={onDelete}>
-          <Trash2 className="h-4 w-4" />
-        </Button>
+        <div className="flex gap-1">
+          {(lora.status === "training" || lora.status === "pending") && (
+            <Button size="icon" variant="ghost" onClick={sync} disabled={syncing} title="Refresh status">
+              <RefreshCw className={`h-4 w-4 ${syncing ? "animate-spin" : ""}`} />
+            </Button>
+          )}
+          <Button size="icon" variant="ghost" onClick={onDelete}>
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
 
       <div className="flex items-center gap-2 text-xs">
