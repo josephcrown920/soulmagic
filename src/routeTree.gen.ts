@@ -24,6 +24,7 @@ import { Route as AssetsRouteImport } from './routes/assets'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiPublicPaystackWebhookRouteImport } from './routes/api/public/paystack/webhook'
+import { Route as ApiPublicHooksReplicateTrainingRouteImport } from './routes/api/public/hooks/replicate-training'
 import { Route as ApiPublicHooksProcessQueueRouteImport } from './routes/api/public/hooks/process-queue'
 
 const VibeRoute = VibeRouteImport.update({
@@ -102,6 +103,12 @@ const ApiPublicPaystackWebhookRoute =
     path: '/api/public/paystack/webhook',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicHooksReplicateTrainingRoute =
+  ApiPublicHooksReplicateTrainingRouteImport.update({
+    id: '/api/public/hooks/replicate-training',
+    path: '/api/public/hooks/replicate-training',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicHooksProcessQueueRoute =
   ApiPublicHooksProcessQueueRouteImport.update({
     id: '/api/public/hooks/process-queue',
@@ -125,6 +132,7 @@ export interface FileRoutesByFullPath {
   '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
   '/api/public/hooks/process-queue': typeof ApiPublicHooksProcessQueueRoute
+  '/api/public/hooks/replicate-training': typeof ApiPublicHooksReplicateTrainingRoute
   '/api/public/paystack/webhook': typeof ApiPublicPaystackWebhookRoute
 }
 export interface FileRoutesByTo {
@@ -143,6 +151,7 @@ export interface FileRoutesByTo {
   '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
   '/api/public/hooks/process-queue': typeof ApiPublicHooksProcessQueueRoute
+  '/api/public/hooks/replicate-training': typeof ApiPublicHooksReplicateTrainingRoute
   '/api/public/paystack/webhook': typeof ApiPublicPaystackWebhookRoute
 }
 export interface FileRoutesById {
@@ -162,6 +171,7 @@ export interface FileRoutesById {
   '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
   '/api/public/hooks/process-queue': typeof ApiPublicHooksProcessQueueRoute
+  '/api/public/hooks/replicate-training': typeof ApiPublicHooksReplicateTrainingRoute
   '/api/public/paystack/webhook': typeof ApiPublicPaystackWebhookRoute
 }
 export interface FileRouteTypes {
@@ -182,6 +192,7 @@ export interface FileRouteTypes {
     | '/train'
     | '/vibe'
     | '/api/public/hooks/process-queue'
+    | '/api/public/hooks/replicate-training'
     | '/api/public/paystack/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -200,6 +211,7 @@ export interface FileRouteTypes {
     | '/train'
     | '/vibe'
     | '/api/public/hooks/process-queue'
+    | '/api/public/hooks/replicate-training'
     | '/api/public/paystack/webhook'
   id:
     | '__root__'
@@ -218,6 +230,7 @@ export interface FileRouteTypes {
     | '/train'
     | '/vibe'
     | '/api/public/hooks/process-queue'
+    | '/api/public/hooks/replicate-training'
     | '/api/public/paystack/webhook'
   fileRoutesById: FileRoutesById
 }
@@ -237,6 +250,7 @@ export interface RootRouteChildren {
   TrainRoute: typeof TrainRoute
   VibeRoute: typeof VibeRoute
   ApiPublicHooksProcessQueueRoute: typeof ApiPublicHooksProcessQueueRoute
+  ApiPublicHooksReplicateTrainingRoute: typeof ApiPublicHooksReplicateTrainingRoute
   ApiPublicPaystackWebhookRoute: typeof ApiPublicPaystackWebhookRoute
 }
 
@@ -347,6 +361,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicPaystackWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/replicate-training': {
+      id: '/api/public/hooks/replicate-training'
+      path: '/api/public/hooks/replicate-training'
+      fullPath: '/api/public/hooks/replicate-training'
+      preLoaderRoute: typeof ApiPublicHooksReplicateTrainingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/hooks/process-queue': {
       id: '/api/public/hooks/process-queue'
       path: '/api/public/hooks/process-queue'
@@ -373,6 +394,7 @@ const rootRouteChildren: RootRouteChildren = {
   TrainRoute: TrainRoute,
   VibeRoute: VibeRoute,
   ApiPublicHooksProcessQueueRoute: ApiPublicHooksProcessQueueRoute,
+  ApiPublicHooksReplicateTrainingRoute: ApiPublicHooksReplicateTrainingRoute,
   ApiPublicPaystackWebhookRoute: ApiPublicPaystackWebhookRoute,
 }
 export const routeTree = rootRouteImport
