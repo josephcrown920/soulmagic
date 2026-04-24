@@ -277,6 +277,7 @@ function Generate() {
       ) : (
         <>
           {/* Controls */}
+          <Reveal delay={0.05}>
           <div className="grid gap-6 lg:grid-cols-[1fr_1.2fr]">
             <div className="space-y-5 rounded-2xl border border-border bg-card p-5 shadow-card">
               <div>
@@ -455,21 +456,24 @@ function Generate() {
               </div>
             </div>
           </div>
+          </Reveal>
 
           {/* Recent */}
           {recent.length > 0 && (
             <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-                  Recent generations
-                </h2>
-                <Link to="/library" className="text-xs text-primary hover:underline">
-                  View all →
-                </Link>
-              </div>
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+              <Reveal>
+                <div className="flex items-center justify-between">
+                  <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+                    Recent generations
+                  </h2>
+                  <Link to="/library" className="text-xs text-primary hover:underline">
+                    View all →
+                  </Link>
+                </div>
+              </Reveal>
+              <RevealStagger className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6" stagger={0.04}>
                 {recent.map((g) => (
-                  <div
+                  <RevealItem
                     key={g.id}
                     className="group relative aspect-square overflow-hidden rounded-lg border border-border bg-muted/30"
                   >
@@ -487,9 +491,9 @@ function Generate() {
                     >
                       <RefreshCw className="h-3 w-3" /> Re-prompt
                     </button>
-                  </div>
+                  </RevealItem>
                 ))}
-              </div>
+              </RevealStagger>
             </div>
           )}
         </>
