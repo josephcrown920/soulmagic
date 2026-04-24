@@ -22,9 +22,20 @@ Deno.serve(async (req) => {
     const admin = createClient(SUPABASE_URL, SERVICE_KEY);
 
     const { data: lora } = await admin.from("loras")
-      .select("id, user_id, replicate_training_id, status").eq("id", loraId).single();
-    if (!lora) throw new Error("LoRA not found");
-    if (!lora.replicate_training_id) throw new Error("No training to sync");
+      .select("id, user_id, replicate_training_id, status").eq("id", loraId).maybeSingle();
+    if (!lora) {
+      return new Response(JSON.stringify({ status: "not_found" }), {
+        status: 404,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (!lora.replicate_training_id) {
+      // Training hasn't been created on Replicate yet — treat as no-op, not an error.
+      return new Response(
+        JSON.stringify({ status: lora.status, note: "No Replicate training id yet" }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
 
     const r = await fetch(
       `https://api.replicate.com/v1/trainings/${lora.replicate_training_id}`,
