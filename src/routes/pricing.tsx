@@ -190,10 +190,10 @@ function Pricing() {
                   <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Redirecting…</>
                 ) : plan.slug === "free" ? "Get started" : `Upgrade to ${plan.name}`}
               </Button>
-            </div>
+            </RevealItem>
           );
         })}
-      </section>
+      </RevealStagger>
 
       <section className="mx-auto max-w-3xl px-6 pb-24">
         <h2 className="text-xl font-semibold">FAQ</h2>
