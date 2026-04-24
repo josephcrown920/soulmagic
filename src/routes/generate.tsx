@@ -13,6 +13,7 @@ import {
 import { Sparkles, Loader2, Brain, Download, RefreshCw, ImageIcon } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { Reveal, RevealStagger, RevealItem } from "@/components/motion/Reveal";
 
 export const Route = createFileRoute("/generate")({
   head: () => ({
@@ -244,19 +245,21 @@ function Generate() {
     <div className="mx-auto max-w-6xl space-y-6">
       <UpgradeBanner kind="images" />
 
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Generate</h1>
-          <p className="text-sm text-muted-foreground">
-            Pick a LoRA, choose a template, and create on-brand images in seconds.
-          </p>
+      <Reveal>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold">Generate</h1>
+            <p className="text-sm text-muted-foreground">
+              Pick a LoRA, choose a template, and create on-brand images in seconds.
+            </p>
+          </div>
+          <Link to="/library">
+            <Button variant="outline" size="sm">
+              <ImageIcon className="mr-1 h-4 w-4" /> Library
+            </Button>
+          </Link>
         </div>
-        <Link to="/library">
-          <Button variant="outline" size="sm">
-            <ImageIcon className="mr-1 h-4 w-4" /> Library
-          </Button>
-        </Link>
-      </div>
+      </Reveal>
 
       {loras.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-border p-10 text-center">
