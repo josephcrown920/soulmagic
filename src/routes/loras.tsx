@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/select";
 import { Brain, Plus, Trash2, Sparkles, Loader2, CheckCircle2, AlertCircle, Clock, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
-import { Reveal, RevealStagger, RevealItem } from "@/components/motion/Reveal";
 
 export const Route = createFileRoute("/loras")({
   component: () => (
@@ -62,38 +61,30 @@ function Loras() {
 
   return (
     <div className="mx-auto max-w-5xl space-y-6">
-      <Reveal>
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold">LoRAs</h1>
-            <p className="text-sm text-muted-foreground">Your trained personal models.</p>
-          </div>
-          <Link to="/train">
-            <Button className="bg-gradient-primary text-primary-foreground">
-              <Plus className="mr-1 h-4 w-4" /> Train new
-            </Button>
-          </Link>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold">LoRAs</h1>
+          <p className="text-sm text-muted-foreground">Your trained personal models.</p>
         </div>
-      </Reveal>
+        <Link to="/train">
+          <Button className="bg-gradient-primary text-primary-foreground">
+            <Plus className="mr-1 h-4 w-4" /> Train new
+          </Button>
+        </Link>
+      </div>
 
       {items.length === 0 ? (
-        <Reveal delay={0.1}>
-          <div className="rounded-2xl border border-dashed border-border p-10 text-center">
-            <Brain className="mx-auto mb-3 h-10 w-10 text-muted-foreground" />
-            <p className="mb-4 text-sm text-muted-foreground">No LoRAs trained yet.</p>
-            <Link to="/train">
-              <Button className="bg-gradient-primary text-primary-foreground">Train your first LoRA</Button>
-            </Link>
-          </div>
-        </Reveal>
+        <div className="rounded-2xl border border-dashed border-border p-10 text-center">
+          <Brain className="mx-auto mb-3 h-10 w-10 text-muted-foreground" />
+          <p className="mb-4 text-sm text-muted-foreground">No LoRAs trained yet.</p>
+          <Link to="/train">
+            <Button className="bg-gradient-primary text-primary-foreground">Train your first LoRA</Button>
+          </Link>
+        </div>
       ) : (
-        <RevealStagger className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" stagger={0.06}>
-          {items.map((l) => (
-            <RevealItem key={l.id}>
-              <LoRACard lora={l} onDelete={() => remove(l.id)} />
-            </RevealItem>
-          ))}
-        </RevealStagger>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {items.map((l) => <LoRACard key={l.id} lora={l} onDelete={() => remove(l.id)} />)}
+        </div>
       )}
     </div>
   );

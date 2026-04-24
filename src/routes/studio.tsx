@@ -11,7 +11,6 @@ import { toast } from "sonner";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
-import { Reveal, RevealStagger, RevealItem } from "@/components/motion/Reveal";
 
 export const Route = createFileRoute("/studio")({
   component: () => (
@@ -126,51 +125,47 @@ function Studio() {
   return (
     <div className="mx-auto max-w-6xl space-y-8">
       <UpgradeBanner kind="jobs" />
-      <Reveal>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h1 className="text-2xl font-bold tracking-tight">Studio</h1>
-            <p className="text-sm text-muted-foreground">
-              Drop clips. They run through your style.
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-muted-foreground">Preset</span>
-            <Select value={presetId} onValueChange={setPresetId}>
-              <SelectTrigger className="w-[220px]">
-                <SelectValue placeholder={presets.length ? "Pick a preset" : "No presets yet"} />
-              </SelectTrigger>
-              <SelectContent>
-                {presets.map((p) => (
-                  <SelectItem key={p.id} value={p.id}>
-                    {p.name} {p.is_default && "·  default"}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">Studio</h1>
+          <p className="text-sm text-muted-foreground">
+            Drop clips. They run through your style.
+          </p>
         </div>
-      </Reveal>
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-muted-foreground">Preset</span>
+          <Select value={presetId} onValueChange={setPresetId}>
+            <SelectTrigger className="w-[220px]">
+              <SelectValue placeholder={presets.length ? "Pick a preset" : "No presets yet"} />
+            </SelectTrigger>
+            <SelectContent>
+              {presets.map((p) => (
+                <SelectItem key={p.id} value={p.id}>
+                  {p.name} {p.is_default && "·  default"}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
 
-      <Reveal delay={0.05}>
-        <div
-          {...getRootProps()}
-          className={`rounded-2xl border-2 border-dashed p-10 text-center transition-colors ${
-            isDragActive
-              ? "border-primary bg-primary/5"
-              : "border-border bg-card/40 hover:border-primary/50"
-          }`}
-        >
-          <input {...getInputProps()} />
-          <Upload className="mx-auto h-10 w-10 text-muted-foreground" />
-          <div className="mt-4 text-base font-medium">
-            {isDragActive ? "Drop them here" : "Drag & drop videos, or click to select"}
-          </div>
-          <div className="mt-1 text-xs text-muted-foreground">
-            MP4, MOV, WEBM — multiple files OK
-          </div>
+      <div
+        {...getRootProps()}
+        className={`rounded-2xl border-2 border-dashed p-10 text-center transition-colors ${
+          isDragActive
+            ? "border-primary bg-primary/5"
+            : "border-border bg-card/40 hover:border-primary/50"
+        }`}
+      >
+        <input {...getInputProps()} />
+        <Upload className="mx-auto h-10 w-10 text-muted-foreground" />
+        <div className="mt-4 text-base font-medium">
+          {isDragActive ? "Drop them here" : "Drag & drop videos, or click to select"}
         </div>
-      </Reveal>
+        <div className="mt-1 text-xs text-muted-foreground">
+          MP4, MOV, WEBM — multiple files OK
+        </div>
+      </div>
 
       {files.length > 0 && (
         <div className="rounded-2xl border border-border bg-card p-4 shadow-card">
@@ -217,13 +212,13 @@ function Studio() {
             No jobs yet.
           </div>
         ) : (
-          <RevealStagger className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4" stagger={0.05}>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {recent.map((j) => {
               const thumb = j.thumbnail_path
                 ? supabase.storage.from("thumbnails").getPublicUrl(j.thumbnail_path).data.publicUrl
                 : null;
               return (
-                <RevealItem key={j.id} className="rounded-xl border border-border bg-card p-3 shadow-card">
+                <div key={j.id} className="rounded-xl border border-border bg-card p-3 shadow-card">
                   <div className="aspect-video w-full overflow-hidden rounded-md bg-muted">
                     {thumb && (
                       <img
@@ -236,10 +231,10 @@ function Studio() {
                   </div>
                   <div className="mt-2 truncate text-sm font-medium">{j.source_filename}</div>
                   <div className="text-xs capitalize text-muted-foreground">{j.status}</div>
-                </RevealItem>
+                </div>
               );
             })}
-          </RevealStagger>
+          </div>
         )}
       </div>
     </div>

@@ -13,7 +13,6 @@ import {
 import { Sparkles, Loader2, Brain, Download, RefreshCw, ImageIcon } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { Reveal, RevealStagger, RevealItem } from "@/components/motion/Reveal";
 
 export const Route = createFileRoute("/generate")({
   head: () => ({
@@ -245,21 +244,19 @@ function Generate() {
     <div className="mx-auto max-w-6xl space-y-6">
       <UpgradeBanner kind="images" />
 
-      <Reveal>
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold">Generate</h1>
-            <p className="text-sm text-muted-foreground">
-              Pick a LoRA, choose a template, and create on-brand images in seconds.
-            </p>
-          </div>
-          <Link to="/library">
-            <Button variant="outline" size="sm">
-              <ImageIcon className="mr-1 h-4 w-4" /> Library
-            </Button>
-          </Link>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold">Generate</h1>
+          <p className="text-sm text-muted-foreground">
+            Pick a LoRA, choose a template, and create on-brand images in seconds.
+          </p>
         </div>
-      </Reveal>
+        <Link to="/library">
+          <Button variant="outline" size="sm">
+            <ImageIcon className="mr-1 h-4 w-4" /> Library
+          </Button>
+        </Link>
+      </div>
 
       {loras.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-border p-10 text-center">
@@ -277,7 +274,6 @@ function Generate() {
       ) : (
         <>
           {/* Controls */}
-          <Reveal delay={0.05}>
           <div className="grid gap-6 lg:grid-cols-[1fr_1.2fr]">
             <div className="space-y-5 rounded-2xl border border-border bg-card p-5 shadow-card">
               <div>
@@ -456,24 +452,21 @@ function Generate() {
               </div>
             </div>
           </div>
-          </Reveal>
 
           {/* Recent */}
           {recent.length > 0 && (
             <div className="space-y-3">
-              <Reveal>
-                <div className="flex items-center justify-between">
-                  <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-                    Recent generations
-                  </h2>
-                  <Link to="/library" className="text-xs text-primary hover:underline">
-                    View all →
-                  </Link>
-                </div>
-              </Reveal>
-              <RevealStagger className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6" stagger={0.04}>
+              <div className="flex items-center justify-between">
+                <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+                  Recent generations
+                </h2>
+                <Link to="/library" className="text-xs text-primary hover:underline">
+                  View all →
+                </Link>
+              </div>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
                 {recent.map((g) => (
-                  <RevealItem
+                  <div
                     key={g.id}
                     className="group relative aspect-square overflow-hidden rounded-lg border border-border bg-muted/30"
                   >
@@ -491,9 +484,9 @@ function Generate() {
                     >
                       <RefreshCw className="h-3 w-3" /> Re-prompt
                     </button>
-                  </RevealItem>
+                  </div>
                 ))}
-              </RevealStagger>
+              </div>
             </div>
           )}
         </>
