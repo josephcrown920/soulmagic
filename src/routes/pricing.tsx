@@ -8,6 +8,7 @@ import { useAuth } from "@/lib/auth";
 import { createCheckout } from "@/lib/billing.functions";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { Reveal, RevealStagger, RevealItem } from "@/components/motion/Reveal";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
@@ -114,7 +115,7 @@ function Pricing() {
         <Link to="/auth"><Button size="sm" variant="ghost">Sign in</Button></Link>
       </header>
 
-      <section className="mx-auto max-w-5xl px-6 pt-16 pb-12 text-center">
+      <Reveal as="section" className="mx-auto max-w-5xl px-6 pt-16 pb-12 text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card/40 px-3 py-1 text-xs text-muted-foreground">
           <Sparkles className="h-3 w-3" /> Simple, monthly. Cancel anytime.
         </div>
@@ -137,14 +138,14 @@ function Pricing() {
             </button>
           ))}
         </div>
-      </section>
+      </Reveal>
 
-      <section className="mx-auto grid max-w-6xl gap-5 px-6 pb-24 md:grid-cols-3">
+      <RevealStagger className="mx-auto grid max-w-6xl gap-5 px-6 pb-24 md:grid-cols-3" stagger={0.12}>
         {sorted.map((plan) => {
           const popular = plan.slug === "pro";
           const price = formatPrice(plan, currency);
           return (
-            <div
+            <RevealItem
               key={plan.slug}
               className={cn(
                 "relative flex flex-col rounded-2xl border bg-card p-6 shadow-card",
@@ -189,10 +190,10 @@ function Pricing() {
                   <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Redirecting…</>
                 ) : plan.slug === "free" ? "Get started" : `Upgrade to ${plan.name}`}
               </Button>
-            </div>
+            </RevealItem>
           );
         })}
-      </section>
+      </RevealStagger>
 
       <section className="mx-auto max-w-3xl px-6 pb-24">
         <h2 className="text-xl font-semibold">FAQ</h2>
