@@ -11,8 +11,9 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const { loraId, prompt, aspectRatio = "1:1" } = await req.json();
+    const { loraId, prompt, aspectRatio = "1:1", numOutputs = 1 } = await req.json();
     if (!loraId || !prompt) throw new Error("loraId and prompt required");
+    const n = Math.min(Math.max(Number(numOutputs) || 1, 1), 4);
 
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
     const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
@@ -45,7 +46,7 @@ Deno.serve(async (req) => {
         input: {
           prompt: fullPrompt,
           aspect_ratio: aspectRatio,
-          num_outputs: 1,
+          num_outputs: n,
           output_format: "jpg",
           output_quality: 90,
           guidance_scale: 3.5,
@@ -69,25 +70,30 @@ Deno.serve(async (req) => {
 
     if (pred.status !== "succeeded") throw new Error(pred.error ?? "Generation failed");
 
-    const imageUrl = Array.isArray(pred.output) ? pred.output[0] : pred.output;
-    if (!imageUrl) throw new Error("No output image");
+    const outputs = Array.isArray(pred.output) ? pred.output : [pred.output];
+    const urls = outputs.filter(Boolean) as string[];
+    if (urls.length === 0) throw new Error("No output image");
 
-    const imgRes = await fetch(imageUrl);
-    const imgBlob = await imgRes.blob();
-    const filePath = `${user.id}/${crypto.randomUUID()}.jpg`;
-    const { error: upErr } = await admin.storage
-      .from("generated-images")
-      .upload(filePath, imgBlob, { contentType: "image/jpeg" });
-    if (upErr) throw upErr;
+    const images: unknown[] = [];
+    for (const imageUrl of urls) {
+      const imgRes = await fetch(imageUrl);
+      const imgBlob = await imgRes.blob();
+      const filePath = `${user.id}/${crypto.randomUUID()}.jpg`;
+      const { error: upErr } = await admin.storage
+        .from("generated-images")
+        .upload(filePath, imgBlob, { contentType: "image/jpeg" });
+      if (upErr) throw upErr;
 
-    const { data: row, error: insErr } = await admin
-      .from("generated_images")
-      .insert({ user_id: user.id, lora_id: loraId, prompt, file_path: filePath })
-      .select()
-      .single();
-    if (insErr) throw insErr;
+      const { data: row, error: insErr } = await admin
+        .from("generated_images")
+        .insert({ user_id: user.id, lora_id: loraId, prompt, file_path: filePath })
+        .select()
+        .single();
+      if (insErr) throw insErr;
+      images.push(row);
+    }
 
-    return new Response(JSON.stringify({ ok: true, image: row }), {
+    return new Response(JSON.stringify({ ok: true, images, image: images[0] }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {

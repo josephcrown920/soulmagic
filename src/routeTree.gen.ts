@@ -18,6 +18,7 @@ import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PresetsRouteImport } from './routes/presets'
 import { Route as LorasRouteImport } from './routes/loras'
 import { Route as LibraryRouteImport } from './routes/library'
+import { Route as GenerateRouteImport } from './routes/generate'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssetsRouteImport } from './routes/assets'
@@ -72,6 +73,11 @@ const LibraryRoute = LibraryRouteImport.update({
   path: '/library',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GenerateRoute = GenerateRouteImport.update({
+  id: '/generate',
+  path: '/generate',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -122,6 +128,7 @@ export interface FileRoutesByFullPath {
   '/assets': typeof AssetsRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/generate': typeof GenerateRoute
   '/library': typeof LibraryRoute
   '/loras': typeof LorasRoute
   '/presets': typeof PresetsRoute
@@ -141,6 +148,7 @@ export interface FileRoutesByTo {
   '/assets': typeof AssetsRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/generate': typeof GenerateRoute
   '/library': typeof LibraryRoute
   '/loras': typeof LorasRoute
   '/presets': typeof PresetsRoute
@@ -161,6 +169,7 @@ export interface FileRoutesById {
   '/assets': typeof AssetsRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/generate': typeof GenerateRoute
   '/library': typeof LibraryRoute
   '/loras': typeof LorasRoute
   '/presets': typeof PresetsRoute
@@ -182,6 +191,7 @@ export interface FileRouteTypes {
     | '/assets'
     | '/auth'
     | '/contact'
+    | '/generate'
     | '/library'
     | '/loras'
     | '/presets'
@@ -201,6 +211,7 @@ export interface FileRouteTypes {
     | '/assets'
     | '/auth'
     | '/contact'
+    | '/generate'
     | '/library'
     | '/loras'
     | '/presets'
@@ -220,6 +231,7 @@ export interface FileRouteTypes {
     | '/assets'
     | '/auth'
     | '/contact'
+    | '/generate'
     | '/library'
     | '/loras'
     | '/presets'
@@ -240,6 +252,7 @@ export interface RootRouteChildren {
   AssetsRoute: typeof AssetsRoute
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
+  GenerateRoute: typeof GenerateRoute
   LibraryRoute: typeof LibraryRoute
   LorasRoute: typeof LorasRoute
   PresetsRoute: typeof PresetsRoute
@@ -319,6 +332,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LibraryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/generate': {
+      id: '/generate'
+      path: '/generate'
+      fullPath: '/generate'
+      preLoaderRoute: typeof GenerateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -384,6 +404,7 @@ const rootRouteChildren: RootRouteChildren = {
   AssetsRoute: AssetsRoute,
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
+  GenerateRoute: GenerateRoute,
   LibraryRoute: LibraryRoute,
   LorasRoute: LorasRoute,
   PresetsRoute: PresetsRoute,
