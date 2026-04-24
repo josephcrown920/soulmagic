@@ -30,6 +30,7 @@ type LoRA = {
   status: string;
   progress: number | null;
   error_message: string | null;
+  replicate_training_id: string | null;
   created_at: string;
 };
 
@@ -123,7 +124,7 @@ function LoRACard({ lora, onDelete }: { lora: LoRA; onDelete: () => void }) {
           </div>
         </div>
         <div className="flex gap-1">
-          {(lora.status === "training" || lora.status === "pending") && (
+          {(lora.status === "training" || lora.status === "pending") && lora.replicate_training_id && (
             <Button size="icon" variant="ghost" onClick={sync} disabled={syncing} title="Refresh status">
               <RefreshCw className={`h-4 w-4 ${syncing ? "animate-spin" : ""}`} />
             </Button>
