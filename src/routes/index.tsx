@@ -5,8 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Reveal, RevealStagger, RevealItem } from "@/components/motion/Reveal";
 import {
   Sparkles, Wand2, Layers, Zap, Brain, Clapperboard,
-  Check, ArrowRight, Star,
+  Check, ArrowRight, Star, X as XIcon, Quote, Youtube, Mic, Building2, Briefcase,
 } from "lucide-react";
+import {
+  Accordion, AccordionContent, AccordionItem, AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card } from "@/components/ui/card";
 import heroCreator from "@/assets/hero-creator.jpg";
 import beforeClip from "@/assets/before-clip.jpg";
 import afterClip from "@/assets/after-clip.jpg";
@@ -21,10 +26,10 @@ import portraitCinematic from "@/assets/portrait-cinematic.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Soul — Lock your face & vibe across every video" },
-      { name: "description", content: "GPU-powered face restoration, color grading, LoRA training and vibe matching. Ship on-brand video in minutes." },
-      { property: "og:title", content: "Soul — Consistency Studio" },
-      { property: "og:description", content: "Drop a clip, lock in your style. Every output stays on-brand." },
+      { title: "Soul Studio — One face. Every frame." },
+      { name: "description", content: "The consistency studio for video creators. Train your face, lock your grade, ship on-brand video in minutes." },
+      { property: "og:title", content: "Soul Studio — One face. Every frame." },
+      { property: "og:description", content: "Train your face. Lock your grade. Every clip on-brand." },
       { property: "og:image", content: "/og-image.jpg" },
       { property: "twitter:image", content: "/og-image.jpg" },
     ],
