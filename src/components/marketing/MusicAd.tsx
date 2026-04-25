@@ -5,10 +5,10 @@ import sponsoredCover from "@/assets/sponsored-track-cover.jpg";
 // === EDIT THIS BLOCK to swap the song being "advertised" ===========
 // Keep this looking like a third-party promo. Do NOT reveal owner.
 export const SPONSORED_TRACK = {
-  title: "Midnight Bloom",
-  artist: "KAINE",
+  title: "The One",
+  artist: "NBA Josh x R3NEGAD3",
   cover: sponsoredCover,
-  link: "#", // paste streaming/landing URL
+  link: "https://open.spotify.com/track/1NGJQfOSZ2M9JSarl80KmG?si=Ghi00yDASF-FvIkTpS467w",
   tag: "Sponsored",
 };
 // ===================================================================
