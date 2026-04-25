@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { RequireAuth } from "@/components/RequireAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
@@ -38,20 +38,62 @@ function Loras() {
   const { user } = useAuth();
   const [items, setItems] = useState<LoRA[]>([]);
 
-  const load = async () => {
-    const { data } = await supabase.from("loras").select("*").order("created_at", { ascending: false });
-    setItems((data ?? []) as LoRA[]);
-  };
+  const load = useCallback(async () => {
+    const { data, error } = await supabase
+      .from("loras")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("Failed to load loras", error);
+      return [] as LoRA[];
+    }
+
+    const rows = (data ?? []) as LoRA[];
+    setItems(rows);
+    return rows;
+  }, []);
+
+  const refreshActiveTrainings = useCallback(async () => {
+    const rows = await load();
+    const active = rows.filter((item) =>
+      (item.status === "training" || item.status === "pending") && item.replicate_training_id,
+    );
+
+    if (active.length === 0) return;
+
+    await Promise.allSettled(
+      active.map((item) =>
+        supabase.functions.invoke("sync-lora-status", {
+          body: { loraId: item.id },
+        }),
+      ),
+    );
+
+    await load();
+  }, [load]);
 
   useEffect(() => {
     if (!user) return;
-    load();
+
+    void refreshActiveTrainings();
+
     const channel = supabase
       .channel("loras-changes")
-      .on("postgres_changes", { event: "*", schema: "public", table: "loras" }, () => load())
+      .on("postgres_changes", { event: "*", schema: "public", table: "loras" }, () => {
+        void load();
+      })
       .subscribe();
-    return () => { supabase.removeChannel(channel); };
-  }, [user]);
+
+    const interval = window.setInterval(() => {
+      void refreshActiveTrainings();
+    }, 15000);
+
+    return () => {
+      window.clearInterval(interval);
+      supabase.removeChannel(channel);
+    };
+  }, [load, refreshActiveTrainings, user]);
 
   const remove = async (id: string) => {
     if (!confirm("Delete this LoRA?")) return;
