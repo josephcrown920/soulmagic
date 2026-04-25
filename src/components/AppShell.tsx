@@ -44,9 +44,9 @@ export function AppShell({ children }: { children: ReactNode }) {
       <div className="flex h-16 items-center gap-2 px-5 border-b border-sidebar-border">
         <div className="h-8 w-8 rounded-lg bg-gradient-primary shadow-elegant" />
         <div>
-          <div className="text-sm font-semibold tracking-tight">Soul</div>
+          <div className="text-sm font-semibold tracking-tight">Soul Studio</div>
           <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
-            consistency studio
+            One face. Every frame.
           </div>
         </div>
       </div>
