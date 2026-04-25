@@ -135,7 +135,7 @@ function AdminPayments() {
     <div className="min-h-screen">
       <header className="sticky top-0 z-30 flex items-center justify-between border-b border-border/40 bg-background/70 px-5 py-3 backdrop-blur md:px-12">
         <Link to="/" className="font-semibold tracking-tight">Soul · Admin</Link>
-        <Link to="/settings"><Button size="sm" variant="ghost">Settings</Button></Link>
+        <Link to="/settings" search={{}}><Button size="sm" variant="ghost">Settings</Button></Link>
       </header>
 
       <div className="mx-auto max-w-4xl space-y-10 p-6">
