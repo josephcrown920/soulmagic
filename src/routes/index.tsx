@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
+import { MusicAdBanner, MusicAdFloatingPlayer } from "@/components/marketing/MusicAd";
 import heroCreator from "@/assets/hero-creator.jpg";
 import beforeClip from "@/assets/before-clip.jpg";
 import afterClip from "@/assets/after-clip.jpg";
@@ -139,6 +140,9 @@ function Landing() {
           </div>
         </div>
       </section>
+
+      {/* Sponsored music spot */}
+      <MusicAdBanner />
 
       {/* Stats counters */}
       <section className="border-b border-border/40 bg-card/20 py-12">
@@ -624,6 +628,8 @@ function Landing() {
           </div>
         </div>
       </footer>
+
+      <MusicAdFloatingPlayer />
     </div>
   );
 }
