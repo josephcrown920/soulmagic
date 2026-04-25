@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useAuth } from "@/lib/auth";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Reveal, RevealStagger, RevealItem } from "@/components/motion/Reveal";
 import {
