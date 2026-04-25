@@ -24,6 +24,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssetsRouteImport } from './routes/assets'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminPaymentsRouteImport } from './routes/admin.payments'
 import { Route as ApiPublicPaystackWebhookRouteImport } from './routes/api/public/paystack/webhook'
 import { Route as ApiPublicHooksReplicateTrainingRouteImport } from './routes/api/public/hooks/replicate-training'
 import { Route as ApiPublicHooksProcessQueueRouteImport } from './routes/api/public/hooks/process-queue'
@@ -103,6 +104,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminPaymentsRoute = AdminPaymentsRouteImport.update({
+  id: '/admin/payments',
+  path: '/admin/payments',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicPaystackWebhookRoute =
   ApiPublicPaystackWebhookRouteImport.update({
     id: '/api/public/paystack/webhook',
@@ -138,6 +144,7 @@ export interface FileRoutesByFullPath {
   '/studio': typeof StudioRoute
   '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
+  '/admin/payments': typeof AdminPaymentsRoute
   '/api/public/hooks/process-queue': typeof ApiPublicHooksProcessQueueRoute
   '/api/public/hooks/replicate-training': typeof ApiPublicHooksReplicateTrainingRoute
   '/api/public/paystack/webhook': typeof ApiPublicPaystackWebhookRoute
@@ -158,6 +165,7 @@ export interface FileRoutesByTo {
   '/studio': typeof StudioRoute
   '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
+  '/admin/payments': typeof AdminPaymentsRoute
   '/api/public/hooks/process-queue': typeof ApiPublicHooksProcessQueueRoute
   '/api/public/hooks/replicate-training': typeof ApiPublicHooksReplicateTrainingRoute
   '/api/public/paystack/webhook': typeof ApiPublicPaystackWebhookRoute
@@ -179,6 +187,7 @@ export interface FileRoutesById {
   '/studio': typeof StudioRoute
   '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
+  '/admin/payments': typeof AdminPaymentsRoute
   '/api/public/hooks/process-queue': typeof ApiPublicHooksProcessQueueRoute
   '/api/public/hooks/replicate-training': typeof ApiPublicHooksReplicateTrainingRoute
   '/api/public/paystack/webhook': typeof ApiPublicPaystackWebhookRoute
@@ -201,6 +210,7 @@ export interface FileRouteTypes {
     | '/studio'
     | '/train'
     | '/vibe'
+    | '/admin/payments'
     | '/api/public/hooks/process-queue'
     | '/api/public/hooks/replicate-training'
     | '/api/public/paystack/webhook'
@@ -221,6 +231,7 @@ export interface FileRouteTypes {
     | '/studio'
     | '/train'
     | '/vibe'
+    | '/admin/payments'
     | '/api/public/hooks/process-queue'
     | '/api/public/hooks/replicate-training'
     | '/api/public/paystack/webhook'
@@ -241,6 +252,7 @@ export interface FileRouteTypes {
     | '/studio'
     | '/train'
     | '/vibe'
+    | '/admin/payments'
     | '/api/public/hooks/process-queue'
     | '/api/public/hooks/replicate-training'
     | '/api/public/paystack/webhook'
@@ -262,6 +274,7 @@ export interface RootRouteChildren {
   StudioRoute: typeof StudioRoute
   TrainRoute: typeof TrainRoute
   VibeRoute: typeof VibeRoute
+  AdminPaymentsRoute: typeof AdminPaymentsRoute
   ApiPublicHooksProcessQueueRoute: typeof ApiPublicHooksProcessQueueRoute
   ApiPublicHooksReplicateTrainingRoute: typeof ApiPublicHooksReplicateTrainingRoute
   ApiPublicPaystackWebhookRoute: typeof ApiPublicPaystackWebhookRoute
@@ -374,6 +387,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/payments': {
+      id: '/admin/payments'
+      path: '/admin/payments'
+      fullPath: '/admin/payments'
+      preLoaderRoute: typeof AdminPaymentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/paystack/webhook': {
       id: '/api/public/paystack/webhook'
       path: '/api/public/paystack/webhook'
@@ -414,6 +434,7 @@ const rootRouteChildren: RootRouteChildren = {
   StudioRoute: StudioRoute,
   TrainRoute: TrainRoute,
   VibeRoute: VibeRoute,
+  AdminPaymentsRoute: AdminPaymentsRoute,
   ApiPublicHooksProcessQueueRoute: ApiPublicHooksProcessQueueRoute,
   ApiPublicHooksReplicateTrainingRoute: ApiPublicHooksReplicateTrainingRoute,
   ApiPublicPaystackWebhookRoute: ApiPublicPaystackWebhookRoute,
