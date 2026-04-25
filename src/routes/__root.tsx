@@ -34,11 +34,15 @@ export const Route = createRootRoute({
       { title: "Style Engine — consistent face & vibe across every video" },
       { name: "description", content: "Drop a clip, lock in your style. GPU-powered face enhancement and color grading that keeps every video on-brand." },
       { name: "author", content: "Style Engine" },
-      { property: "og:title", content: "Style Engine" },
-      { property: "og:description", content: "Drop a clip, lock in your style." },
+      { property: "og:title", content: "Style Engine — consistent face & vibe across every video" },
+      { property: "og:description", content: "Drop a clip, lock in your style. GPU-powered face enhancement and color grading that keeps every video on-brand." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Style Engine — consistent face & vibe across every video" },
+      { name: "twitter:description", content: "Drop a clip, lock in your style. GPU-powered face enhancement and color grading that keeps every video on-brand." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/d2355ead-35c0-4190-b196-a2a0f824b311" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/d2355ead-35c0-4190-b196-a2a0f824b311" },
     ],
     links: [
       {
