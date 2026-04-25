@@ -271,6 +271,21 @@ export type Database = {
         }
         Relationships: []
       }
+      pending_admin_emails: {
+        Row: {
+          created_at: string
+          email: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+        }
+        Relationships: []
+      }
       presets: {
         Row: {
           background_upscale: boolean | null
@@ -606,6 +621,7 @@ export type Database = {
         }
       }
       get_user_plan: { Args: { _user_id: string }; Returns: string }
+      grant_admin_by_email: { Args: { _email: string }; Returns: undefined }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
