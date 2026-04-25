@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
+import { MusicAdBanner, MusicAdFloatingPlayer } from "@/components/marketing/MusicAd";
 import heroCreator from "@/assets/hero-creator.jpg";
 import beforeClip from "@/assets/before-clip.jpg";
 import afterClip from "@/assets/after-clip.jpg";
