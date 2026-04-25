@@ -625,6 +625,8 @@ function Landing() {
           </div>
         </div>
       </footer>
+
+      <MusicAdFloatingPlayer />
     </div>
   );
 }
