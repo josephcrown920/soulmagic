@@ -2,11 +2,11 @@
 
 ## Purpose
 
-**Style Engine** is a "consistency studio" for video and image creators. It lets a user train a personal LoRA (face or style), define reusable visual presets (LUT, color grading, face restoration), and run uploaded video clips through a GPU pipeline so every output stays on-brand.
+**Soul** is a "consistency studio" for video and image creators. It lets a user train a personal LoRA (face or style), define reusable visual presets (LUT, color grading, face restoration), and run uploaded video clips through a GPU pipeline so every output stays on-brand.
 
 Marketing positioning (from `src/routes/index.tsx` and `src/routes/__root.tsx`):
 
-> "Style Engine — consistent face & vibe across every video. Drop a clip, lock in your style. GPU-powered face enhancement and color grading that keeps every video on-brand."
+> "Soul — consistent face & vibe across every video. Drop a clip, lock in your style. GPU-powered face enhancement and color grading that keeps every video on-brand."
 
 ## Target Users
 

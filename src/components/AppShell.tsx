@@ -44,7 +44,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <div className="flex h-16 items-center gap-2 px-5 border-b border-sidebar-border">
         <div className="h-8 w-8 rounded-lg bg-gradient-primary shadow-elegant" />
         <div>
-          <div className="text-sm font-semibold tracking-tight">Style Engine</div>
+          <div className="text-sm font-semibold tracking-tight">Soul</div>
           <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
             consistency studio
           </div>
@@ -131,7 +131,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
-          <div className="text-sm font-semibold">Style Engine</div>
+          <div className="text-sm font-semibold">Soul</div>
         </header>
         <div className="p-4 md:p-8">{children}</div>
       </main>

@@ -1,7 +1,7 @@
-# MARKETING PLAN — Style Engine
+# MARKETING PLAN — Soul
 
 ## 1. Positioning
-**One-liner:** Style Engine is the consistency studio for video creators — train a LoRA of your face, lock a color grade, ship on-brand video without juggling five tools.
+**One-liner:** Soul is the consistency studio for video creators — train a LoRA of your face, lock a color grade, ship on-brand video without juggling five tools.
 
 **Category:** Creator AI / Video post-production
 **Wedge:** Identity + grade consistency across every clip (not "another AI video generator")

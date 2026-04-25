@@ -13,9 +13,9 @@ import { Reveal, RevealStagger, RevealItem } from "@/components/motion/Reveal";
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "Pricing — Style Engine" },
+      { title: "Pricing — Soul" },
       { name: "description", content: "Simple plans for solo creators and studios. Start free, upgrade when you ship." },
-      { property: "og:title", content: "Pricing — Style Engine" },
+      { property: "og:title", content: "Pricing — Soul" },
       { property: "og:description", content: "Free, Pro, and Studio plans. Pay in USD or NGN." },
     ],
   }),
@@ -110,7 +110,7 @@ function Pricing() {
       <header className="sticky top-0 z-30 flex items-center justify-between border-b border-border/40 bg-background/70 px-5 py-3 backdrop-blur md:px-12">
         <Link to="/" className="flex items-center gap-2">
           <div className="h-8 w-8 rounded-lg bg-gradient-primary shadow-elegant" />
-          <span className="font-semibold tracking-tight">Style Engine</span>
+          <span className="font-semibold tracking-tight">Soul</span>
         </Link>
         <Link to="/auth"><Button size="sm" variant="ghost">Sign in</Button></Link>
       </header>
