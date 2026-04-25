@@ -57,8 +57,11 @@ function Train() {
     if (photos.length < 4) return toast.error("Upload at least 4 photos (10–20 is ideal)");
 
     setSubmitting(true);
+    let loraId: string | null = null;
+    const uploadedPaths: string[] = [];
+
     try {
-      // 1. Create LoRA row
+      // 1. Create LoRA row first so we have a stable id for storage paths.
       const { data: lora, error } = await supabase
         .from("loras")
         .insert({
@@ -72,27 +75,45 @@ function Train() {
         .select()
         .single();
       if (error) throw error;
+      loraId = lora.id;
 
-      // 2. Upload all photos to lora-training bucket
-      const paths: string[] = [];
+      // 2. Upload all photos to lora-training bucket. If any fail, we clean up.
       for (let i = 0; i < photos.length; i++) {
         const ext = photos[i].file.name.split(".").pop() ?? "jpg";
         const path = `${user.id}/${lora.id}/${i}.${ext}`;
         const { error: upErr } = await supabase.storage
           .from("lora-training")
           .upload(path, photos[i].file, { upsert: true });
-        if (upErr) throw upErr;
-        paths.push(path);
+        if (upErr) throw new Error(`Upload failed: ${upErr.message}`);
+        uploadedPaths.push(path);
       }
 
-      await supabase.from("loras").update({ training_image_paths: paths }).eq("id", lora.id);
+      await supabase
+        .from("loras")
+        .update({ training_image_paths: uploadedPaths })
+        .eq("id", lora.id);
 
-      // 3. Kick off training (fire and forget — runs ~20min on Replicate)
-      supabase.functions.invoke("train-lora", { body: { loraId: lora.id } }).catch(() => {});
+      // 3. Kick off training. Await so we surface backend errors instead of
+      // leaving the row stuck in 'pending'.
+      const { data: invokeData, error: invokeErr } = await supabase.functions.invoke(
+        "train-lora",
+        { body: { loraId: lora.id } },
+      );
+      if (invokeErr) throw new Error(invokeErr.message);
+      if (invokeData && (invokeData as { error?: string }).error) {
+        throw new Error((invokeData as { error: string }).error);
+      }
 
       toast.success("Training started! Check the LoRAs page for progress.");
       nav({ to: "/loras" });
     } catch (e) {
+      // Roll back: delete the row + uploaded files so the user can retry cleanly.
+      if (loraId) {
+        if (uploadedPaths.length > 0) {
+          await supabase.storage.from("lora-training").remove(uploadedPaths).catch(() => {});
+        }
+        await supabase.from("loras").delete().eq("id", loraId).catch(() => {});
+      }
       toast.error(e instanceof Error ? e.message : "Failed to start training");
     } finally {
       setSubmitting(false);
