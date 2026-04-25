@@ -123,7 +123,41 @@ function Landing() {
         </Reveal>
       </section>
 
-      {/* BEFORE → AFTER story */}
+      {/* Social proof bar */}
+      <section className="border-y border-border/40 bg-background/40 py-8">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="text-center text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+            Trusted by creators shipping on
+          </div>
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 opacity-70">
+            {["YOUTUBE", "TIKTOK", "INSTAGRAM", "LINKEDIN", "PODCASTS", "SUBSTACK"].map((b) => (
+              <span key={b} className="text-sm font-bold tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground">
+                {b}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Stats counters */}
+      <section className="border-b border-border/40 bg-card/20 py-12">
+        <div className="mx-auto grid max-w-5xl grid-cols-2 gap-6 px-6 md:grid-cols-4">
+          {[
+            { n: "10k+", l: "LoRAs trained" },
+            { n: "2M+", l: "Frames restored" },
+            { n: "4.9★", l: "Creator rating" },
+            { n: "<20m", l: "Avg train time" },
+          ].map((s) => (
+            <div key={s.l} className="text-center">
+              <div className="bg-gradient-primary bg-clip-text text-3xl font-bold tracking-tight text-transparent md:text-4xl">
+                {s.n}
+              </div>
+              <div className="mt-1 text-xs uppercase tracking-widest text-muted-foreground">{s.l}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section className="border-y border-border/40 bg-card/30 py-20">
         <div className="mx-auto max-w-6xl px-6">
           <Reveal className="mb-12 text-center">
