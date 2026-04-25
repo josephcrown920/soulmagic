@@ -311,20 +311,278 @@ function Landing() {
         </RevealStagger>
       </section>
 
-      {/* Social proof */}
-      <section className="border-t border-border/40 bg-card/30 py-20">
-        <Reveal className="mx-auto max-w-4xl px-6 text-center">
-          <div className="mb-2 inline-flex items-center gap-1 text-warning">
-            {[...Array(5)].map((_, i) => <Star key={i} className="h-4 w-4 fill-current" />)}
-          </div>
-          <p className="text-xl font-medium leading-relaxed text-foreground md:text-2xl">
-            "I used to bounce between Topaz, Resolve and a face swap tool. Now it's
-            one preset and a drag-and-drop. My output is finally consistent."
+      {/* Use-case tabs */}
+      <section className="border-y border-border/40 bg-card/30 py-20">
+        <div className="mx-auto max-w-5xl px-6">
+          <Reveal className="mb-10 text-center">
+            <div className="text-xs uppercase tracking-widest text-primary">Built for your workflow</div>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
+              Whatever you ship, Soul keeps it on-brand.
+            </h2>
+          </Reveal>
+          <Tabs defaultValue="youtuber" className="w-full">
+            <TabsList className="mx-auto grid w-full max-w-2xl grid-cols-2 md:grid-cols-4">
+              <TabsTrigger value="youtuber"><Youtube className="mr-1 h-3 w-3" />YouTubers</TabsTrigger>
+              <TabsTrigger value="coach"><Briefcase className="mr-1 h-3 w-3" />Coaches</TabsTrigger>
+              <TabsTrigger value="agency"><Building2 className="mr-1 h-3 w-3" />Agencies</TabsTrigger>
+              <TabsTrigger value="podcast"><Mic className="mr-1 h-3 w-3" />Podcasters</TabsTrigger>
+            </TabsList>
+            {[
+              { v: "youtuber", t: "Same face, every thumbnail", d: "Train one LoRA, generate unlimited thumbnails and B-roll stills that look like you — without re-shooting.", b: "Cut thumbnail time from 1hr to 2 min." },
+              { v: "coach", t: "Look polished on every platform", d: "LinkedIn headshot, IG carousel, course cover — one upload, every channel covered with a consistent brand grade.", b: "Show up like a pro, every post." },
+              { v: "agency", t: "5 client LoRAs, one dashboard", d: "Manage trained models per client. Save grade presets. Bill faster with reusable pipelines.", b: "Triple your output per editor." },
+              { v: "podcast", t: "Cinematic clips from raw Zoom", d: "Drop a recording, get face-restored, color-graded vertical clips ready for Reels and Shorts.", b: "Turn one episode into 20 cuts." },
+            ].map((u) => (
+              <TabsContent key={u.v} value={u.v} className="mt-8">
+                <Card className="border-border bg-background/40 p-8 shadow-card">
+                  <div className="text-lg font-semibold md:text-xl">{u.t}</div>
+                  <p className="mt-2 text-muted-foreground">{u.d}</p>
+                  <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">
+                    <Sparkles className="h-3 w-3" /> {u.b}
+                  </div>
+                </Card>
+              </TabsContent>
+            ))}
+          </Tabs>
+        </div>
+      </section>
+
+      {/* Comparison table */}
+      <section className="mx-auto max-w-5xl px-6 py-24">
+        <Reveal className="mb-10 text-center">
+          <div className="text-xs uppercase tracking-widest text-primary">Why switch</div>
+          <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
+            One tab beats five tools.
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
+            Stop stitching Topaz, Resolve and a face-swap into a fragile pipeline. Soul does it in one pass.
           </p>
-          <div className="mt-4 text-sm text-muted-foreground">
-            — Maya O., independent creator
-          </div>
         </Reveal>
+        <Reveal>
+          <div className="overflow-hidden rounded-2xl border border-border bg-card/40 shadow-card">
+            <div className="grid grid-cols-5 border-b border-border bg-card/60 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              <div className="p-4">Feature</div>
+              <div className="p-4 text-center text-primary">Soul Studio</div>
+              <div className="p-4 text-center">Topaz</div>
+              <div className="p-4 text-center">Resolve</div>
+              <div className="p-4 text-center">FaceSwap</div>
+            </div>
+            {[
+              ["Identity-locked face", true, false, false, true],
+              ["Color grade presets", true, false, true, false],
+              ["Frame-by-frame restore", true, true, false, false],
+              ["Train your own LoRA", true, false, false, false],
+              ["No GPU needed locally", true, false, false, false],
+              ["Avg cost / 60s clip", "$0.40", "$2.50", "Free*", "$1.20"],
+              ["Time to result", "~3 min", "~25 min", "Hours", "~15 min"],
+            ].map((row, i) => (
+              <div key={i} className={cn("grid grid-cols-5 border-b border-border/50 text-sm last:border-0", i % 2 && "bg-card/20")}>
+                <div className="p-4 font-medium">{row[0] as string}</div>
+                {row.slice(1).map((cell, j) => (
+                  <div key={j} className={cn("p-4 text-center", j === 0 && "text-primary font-semibold")}>
+                    {typeof cell === "boolean" ? (
+                      cell ? <Check className="mx-auto h-4 w-4 text-primary" /> : <XIcon className="mx-auto h-4 w-4 text-muted-foreground/50" />
+                    ) : cell}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+          <div className="mt-3 text-center text-xs text-muted-foreground">*Resolve is free but requires a powerful local GPU + steep learning curve.</div>
+        </Reveal>
+      </section>
+
+      {/* Sample gallery — masonry */}
+      <section className="border-y border-border/40 bg-card/30 py-24">
+        <div className="mx-auto max-w-6xl px-6">
+          <Reveal className="mb-10 text-center">
+            <div className="text-xs uppercase tracking-widest text-primary">From the community</div>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
+              Real prompts. Real LoRAs. Real outputs.
+            </h2>
+          </Reveal>
+          <div className="columns-2 gap-4 md:columns-4">
+            {[
+              { img: portraitLinkedin, p: "executive headshot, soft window light, charcoal blazer", h: "h-72" },
+              { img: portraitInstagram, p: "golden hour rooftop, linen shirt, candid laugh", h: "h-96" },
+              { img: portraitPodcast, p: "studio mic close-up, neon backlight, moody cinematic", h: "h-80" },
+              { img: portraitCinematic, p: "anamorphic close-up, teal/orange grade, film grain", h: "h-[26rem]" },
+              { img: portraitLinkedin, p: "minimal white backdrop, editorial fashion lighting", h: "h-64" },
+              { img: portraitInstagram, p: "café morning, latte in hand, sunlit window bokeh", h: "h-80" },
+              { img: portraitPodcast, p: "vintage record store, warm tungsten, grainy 35mm", h: "h-96" },
+              { img: portraitCinematic, p: "neo-noir alley, rain reflections, deep contrast", h: "h-72" },
+            ].map((g, i) => (
+              <div key={i} className="group relative mb-4 break-inside-avoid overflow-hidden rounded-xl border border-border">
+                <img src={g.img} alt={g.p} loading="lazy" className={cn("w-full object-cover transition-transform duration-700 group-hover:scale-105", g.h)} />
+                <div className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-background via-background/80 to-transparent p-3 transition-transform duration-300 group-hover:translate-y-0">
+                  <div className="text-[10px] uppercase tracking-widest text-primary">prompt</div>
+                  <div className="line-clamp-2 text-xs text-foreground">{g.p}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing teaser */}
+      <section className="mx-auto max-w-6xl px-6 py-24">
+        <Reveal className="mb-10 text-center">
+          <div className="text-xs uppercase tracking-widest text-primary">Simple pricing</div>
+          <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
+            Start free. Scale when you ship.
+          </h2>
+        </Reveal>
+        <RevealStagger className="grid gap-6 md:grid-cols-3">
+          {[
+            { n: "Free", p: "$0", d: "Try every tool", f: ["1 job / month", "Watermarked output", "Community presets"], cta: "Start free", featured: false },
+            { n: "Pro", p: "$29", d: "For solo creators", f: ["50 jobs / month", "No watermark", "1 trained LoRA", "Priority queue"], cta: "Go Pro", featured: true },
+            { n: "Studio", p: "$99", d: "For teams & agencies", f: ["Unlimited jobs", "5 LoRAs", "Client workspaces", "API access"], cta: "Get Studio", featured: false },
+          ].map((t) => (
+            <RevealItem key={t.n}>
+              <Card className={cn(
+                "h-full p-8 transition-all",
+                t.featured ? "border-primary/60 bg-gradient-to-br from-primary/10 to-transparent shadow-elegant" : "border-border bg-card/40 shadow-card"
+              )}>
+                {t.featured && (
+                  <div className="mb-3 inline-block rounded-full bg-gradient-primary px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary-foreground">
+                    Most popular
+                  </div>
+                )}
+                <div className="text-lg font-semibold">{t.n}</div>
+                <div className="mt-1 text-sm text-muted-foreground">{t.d}</div>
+                <div className="mt-4 flex items-baseline gap-1">
+                  <span className="text-4xl font-bold tracking-tight">{t.p}</span>
+                  <span className="text-sm text-muted-foreground">/mo</span>
+                </div>
+                <ul className="mt-6 space-y-2 text-sm">
+                  {t.f.map((feat) => (
+                    <li key={feat} className="flex items-start gap-2">
+                      <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                      <span>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link to="/pricing" className="mt-6 block">
+                  <Button className={cn("w-full", t.featured && "bg-gradient-primary text-primary-foreground shadow-elegant")} variant={t.featured ? "default" : "outline"}>
+                    {t.cta}
+                  </Button>
+                </Link>
+              </Card>
+            </RevealItem>
+          ))}
+        </RevealStagger>
+        <div className="mt-6 text-center">
+          <Link to="/pricing" className="text-sm text-muted-foreground hover:text-foreground">
+            Compare full plans →
+          </Link>
+        </div>
+      </section>
+
+      {/* Testimonials grid */}
+      <section className="border-y border-border/40 bg-card/30 py-24">
+        <div className="mx-auto max-w-6xl px-6">
+          <Reveal className="mb-12 text-center">
+            <div className="text-xs uppercase tracking-widest text-primary">Loved by creators</div>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
+              The end of the five-tool tax.
+            </h2>
+          </Reveal>
+          <RevealStagger className="grid gap-6 md:grid-cols-3">
+            {[
+              { q: "I used to bounce between Topaz, Resolve and a face swap tool. Now it's one preset and a drag-and-drop. Finally consistent.", a: "Maya O.", r: "Independent creator · 84k IG" },
+              { q: "Trained my LoRA in 18 minutes. Shipped 12 thumbnails the next morning. My CTR is up 34%.", a: "Daniel K.", r: "YouTuber · 220k subs" },
+              { q: "We onboarded 4 client LoRAs and cut our editing time in half. Soul Studio paid for itself in week one.", a: "Lola A.", r: "Founder · Tilt Studio" },
+            ].map((t) => (
+              <RevealItem key={t.a}>
+                <Card className="h-full border-border bg-background/40 p-6 shadow-card">
+                  <Quote className="h-5 w-5 text-primary" />
+                  <p className="mt-4 text-sm leading-relaxed text-foreground">"{t.q}"</p>
+                  <div className="mt-6 border-t border-border/50 pt-4">
+                    <div className="text-sm font-semibold">{t.a}</div>
+                    <div className="text-xs text-muted-foreground">{t.r}</div>
+                  </div>
+                  <div className="mt-3 inline-flex gap-0.5 text-warning">
+                    {[...Array(5)].map((_, i) => <Star key={i} className="h-3 w-3 fill-current" />)}
+                  </div>
+                </Card>
+              </RevealItem>
+            ))}
+          </RevealStagger>
+        </div>
+      </section>
+
+      {/* Press / As seen in */}
+      <section className="border-b border-border/40 py-12">
+        <div className="mx-auto max-w-5xl px-6 text-center">
+          <div className="mb-5 text-[10px] uppercase tracking-[0.25em] text-muted-foreground">As featured on</div>
+          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-sm font-bold tracking-[0.2em] text-muted-foreground">
+            <span>PRODUCT HUNT #3</span>
+            <span>·</span>
+            <span>INDIE HACKERS</span>
+            <span>·</span>
+            <span>TECHCABAL</span>
+            <span>·</span>
+            <span>MAKER LOG</span>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="mx-auto max-w-3xl px-6 py-24">
+        <Reveal className="mb-10 text-center">
+          <div className="text-xs uppercase tracking-widest text-primary">Questions, answered</div>
+          <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">FAQ</h2>
+        </Reveal>
+        <Reveal>
+          <Accordion type="single" collapsible className="w-full">
+            {[
+              { q: "How long does training a LoRA take?", a: "Typically 15–25 minutes on our GPU pipeline. You'll get an email when it's ready." },
+              { q: "Is my training data private?", a: "Yes. Your photos and trained models are private to your account by default. We never reuse your data to train shared models." },
+              { q: "Can I use the outputs commercially?", a: "Yes. On Pro and Studio plans, you own all outputs and can use them in client work, ads, and monetized content." },
+              { q: "What if I don't like the result?", a: "Free plan lets you test before paying. If your first paid month doesn't work for you, email us within 14 days for a full refund." },
+              { q: "Do I need a powerful computer?", a: "No. Everything runs in our cloud. You just need a browser and an internet connection." },
+              { q: "What file formats are supported?", a: "MP4, MOV, WebM for video. JPG, PNG, WebP for images. Up to 4K resolution on Pro and Studio." },
+              { q: "Can I cancel any time?", a: "Yes. Subscriptions are month-to-month and can be cancelled in one click from Settings." },
+            ].map((f, i) => (
+              <AccordionItem key={i} value={`item-${i}`} className="border-border">
+                <AccordionTrigger className="text-left text-base hover:text-primary">{f.q}</AccordionTrigger>
+                <AccordionContent className="text-muted-foreground">{f.a}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </Reveal>
+      </section>
+
+      {/* Founder note */}
+      <section className="border-t border-border/40 bg-gradient-to-b from-card/30 to-transparent py-24">
+        <div className="mx-auto max-w-3xl px-6">
+          <Reveal className="text-center">
+            <div className="text-xs uppercase tracking-widest text-primary">Why I built Soul Studio</div>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
+              I was tired of looking different in every video.
+            </h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="mt-8 space-y-4 text-base leading-relaxed text-muted-foreground">
+              <p>
+                I shipped 200+ videos last year. Half were great. The other half — flat lighting, washed-out skin, a face that didn't quite look like mine. I was paying for Topaz, Resolve, a face-swap tool, and still spending Sundays color-matching clips.
+              </p>
+              <p>
+                Soul Studio is the tool I wish I had two years ago. Train your face once, lock your grade once, and every clip you ship from that point forward stays on-brand. No more five-tool tax. No more "is this even me?"
+              </p>
+              <p className="text-foreground">
+                If you ship video and care about how it looks — this is for you.
+              </p>
+            </div>
+            <div className="mt-8 flex items-center gap-3">
+              <div className="h-12 w-12 rounded-full bg-gradient-primary shadow-elegant" />
+              <div>
+                <div className="text-sm font-semibold">The Soul Studio team</div>
+                <div className="text-xs text-muted-foreground">Lagos · Remote</div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
       </section>
 
       {/* CTA */}
