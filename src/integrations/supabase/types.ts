@@ -44,6 +44,60 @@ export type Database = {
         }
         Relationships: []
       }
+      crypto_payments: {
+        Row: {
+          created_at: string
+          id: string
+          nowpayments_invoice_id: string | null
+          nowpayments_payment_id: string | null
+          order_id: string
+          pay_address: string | null
+          pay_amount: number | null
+          pay_currency: string | null
+          plan_slug: string
+          price_amount: number
+          price_currency: string
+          raw: Json | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          nowpayments_invoice_id?: string | null
+          nowpayments_payment_id?: string | null
+          order_id: string
+          pay_address?: string | null
+          pay_amount?: number | null
+          pay_currency?: string | null
+          plan_slug: string
+          price_amount: number
+          price_currency?: string
+          raw?: Json | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          nowpayments_invoice_id?: string | null
+          nowpayments_payment_id?: string | null
+          order_id?: string
+          pay_address?: string | null
+          pay_amount?: number | null
+          pay_currency?: string | null
+          plan_slug?: string
+          price_amount?: number
+          price_currency?: string
+          raw?: Json | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       generated_images: {
         Row: {
           created_at: string
@@ -422,6 +476,48 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      sponsored_tracks: {
+        Row: {
+          artist: string
+          cover_url: string | null
+          created_at: string
+          ends_at: string | null
+          id: string
+          is_active: boolean
+          link_url: string
+          starts_at: string | null
+          tag: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          artist: string
+          cover_url?: string | null
+          created_at?: string
+          ends_at?: string | null
+          id?: string
+          is_active?: boolean
+          link_url: string
+          starts_at?: string | null
+          tag?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          artist?: string
+          cover_url?: string | null
+          created_at?: string
+          ends_at?: string | null
+          id?: string
+          is_active?: boolean
+          link_url?: string
+          starts_at?: string | null
+          tag?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       subscription_plans: {
         Row: {
