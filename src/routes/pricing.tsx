@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { Check, Loader2, Sparkles } from "lucide-react";
+import { Bitcoin, Check, Loader2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
@@ -9,6 +9,7 @@ import { createCheckout } from "@/lib/billing.functions";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Reveal, RevealStagger, RevealItem } from "@/components/motion/Reveal";
+import { CryptoPayDialog } from "@/components/billing/CryptoPayDialog";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
