@@ -1,0 +1,55 @@
+# Netlify config for the Style Engine frontend.
+#
+# IMPORTANT — read before deploying:
+#
+# 1. Backend stays on Lovable Cloud (Supabase). The Supabase URL + anon key are
+#    already baked into the build via VITE_SUPABASE_URL / VITE_SUPABASE_PUBLISHABLE_KEY,
+#    so auth, database, storage, edge functions, and realtime keep working.
+#
+# 2. This project is built on TanStack Start (SSR + server functions). A pure
+#    static export will NOT execute:
+#      - createServerFn handlers in src/lib/billing.functions.ts
+#      - server route handlers under src/routes/api/public/* (Paystack webhook,
+#        Replicate training webhook, queue cron)
+#    To run those on Netlify you must use the TanStack Start Netlify preset
+#    (https://tanstack.com/start/latest/docs/framework/react/hosting#netlify),
+#    which emits Netlify Functions for the server routes. Until that preset is
+#    wired into vite.config.ts, those endpoints will 404 on the Netlify URL —
+#    keep pointing Replicate/Paystack webhooks at the existing Lovable URL or
+#    re-host those handlers on Lovable Cloud edge functions.
+#
+# 3. Required env vars to set in Netlify dashboard (Site settings → Environment):
+#      VITE_SUPABASE_URL
+#      VITE_SUPABASE_PUBLISHABLE_KEY
+#      VITE_SUPABASE_PROJECT_ID
+#    These are read at build time by Vite — they must be present before `bun run build`.
+
+[build]
+  command = "bun run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# SPA fallback so client-side routes (TanStack Router) work on hard refresh.
+# Note: this only matters for the static client bundle; if/when you add the
+# TanStack Start Netlify preset, those server routes are matched first.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Sensible security headers for the SPA.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# Long-cache hashed build assets.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
