@@ -3,8 +3,16 @@
 // Designed to match the existing dark, magenta-accent design system —
 // motion is subtle (fade + small translate), never flashy.
 
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { motion, useReducedMotion as useOsReducedMotion, type Variants } from "framer-motion";
 import { type ReactNode } from "react";
+import { useReducedMotionPrefValue } from "@/hooks/use-reduced-motion-pref";
+
+// Combine OS preference with user-toggled preference from Settings.
+function useReducedMotion() {
+  const os = useOsReducedMotion();
+  const user = useReducedMotionPrefValue();
+  return os || user;
+}
 
 type RevealProps = {
   children: ReactNode;
