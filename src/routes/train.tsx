@@ -112,7 +112,7 @@ function Train() {
         if (uploadedPaths.length > 0) {
           await supabase.storage.from("lora-training").remove(uploadedPaths).catch(() => {});
         }
-        await supabase.from("loras").delete().eq("id", loraId).catch(() => {});
+        await supabase.from("loras").delete().eq("id", loraId);
       }
       toast.error(e instanceof Error ? e.message : "Failed to start training");
     } finally {
