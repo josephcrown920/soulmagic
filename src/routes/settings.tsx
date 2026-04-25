@@ -18,6 +18,7 @@ import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Loader2, Sparkles } from "lucide-react";
+import { useReducedMotionPref } from "@/hooks/use-reduced-motion-pref";
 
 export const Route = createFileRoute("/settings")({
   validateSearch: (s: Record<string, unknown>) => ({
@@ -167,12 +168,16 @@ function Settings() {
           <BillingTab billingParam={search.billing} reference={search.reference} />
         </TabsContent>
 
-        <TabsContent value="advanced" className="rounded-2xl border border-border bg-card p-6 shadow-card">
-          <div className="text-sm font-semibold">Replicate API token</div>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Required for GPU video processing. Token is configured in your project secrets.
-            Get one at <a className="text-primary underline" href="https://replicate.com/account/api-tokens" target="_blank" rel="noreferrer">replicate.com/account/api-tokens</a>.
-          </p>
+        <TabsContent value="advanced" className="space-y-5 rounded-2xl border border-border bg-card p-6 shadow-card">
+          <ReducedMotionRow />
+
+          <div>
+            <div className="text-sm font-semibold">Replicate API token</div>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Required for GPU video processing. Token is configured in your project secrets.
+              Get one at <a className="text-primary underline" href="https://replicate.com/account/api-tokens" target="_blank" rel="noreferrer">replicate.com/account/api-tokens</a>.
+            </p>
+          </div>
         </TabsContent>
       </Tabs>
     </div>
@@ -303,6 +308,27 @@ function UsageBar({ label, used, total }: { label: string; used: number; total: 
         <span className="font-medium">{used} / {total}</span>
       </div>
       <Progress value={pct} className="h-2" />
+    </div>
+  );
+}
+
+function ReducedMotionRow() {
+  const [reduced, setReduced] = useReducedMotionPref();
+  return (
+    <div className="flex items-center justify-between rounded-lg border border-border bg-background/30 p-3">
+      <div>
+        <Label>Reduce motion</Label>
+        <div className="text-xs text-muted-foreground">
+          Disable scroll & entrance animations across the app. Saved on this device.
+        </div>
+      </div>
+      <Switch
+        checked={reduced}
+        onCheckedChange={(v) => {
+          setReduced(v);
+          toast.success(v ? "Motion reduced" : "Motion enabled");
+        }}
+      />
     </div>
   );
 }
