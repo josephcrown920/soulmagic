@@ -141,6 +141,9 @@ function Landing() {
         </div>
       </section>
 
+      {/* Sponsored music spot */}
+      <MusicAdBanner />
+
       {/* Stats counters */}
       <section className="border-b border-border/40 bg-card/20 py-12">
         <div className="mx-auto grid max-w-5xl grid-cols-2 gap-6 px-6 md:grid-cols-4">
