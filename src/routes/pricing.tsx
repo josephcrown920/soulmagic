@@ -65,6 +65,7 @@ function Pricing() {
   const [plans, setPlans] = useState<PlanRow[]>([]);
   const [currency, setCurrency] = useState<"USD" | "NGN">(detectCurrency());
   const [busy, setBusy] = useState<string | null>(null);
+  const [cryptoPlan, setCryptoPlan] = useState<PlanRow | null>(null);
   const checkoutFn = useServerFn(createCheckout);
 
   useEffect(() => {
@@ -191,10 +192,33 @@ function Pricing() {
                   <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Redirecting…</>
                 ) : plan.slug === "free" ? "Get started" : `Upgrade to ${plan.name}`}
               </Button>
+              {plan.slug !== "free" && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="mt-2 w-full text-xs text-muted-foreground hover:text-foreground"
+                  onClick={() => {
+                    if (!user) { nav({ to: "/auth" }); return; }
+                    setCryptoPlan(plan);
+                  }}
+                >
+                  <Bitcoin className="mr-1.5 h-3.5 w-3.5" /> Pay with crypto (USDC / USDT)
+                </Button>
+              )}
             </RevealItem>
           );
         })}
       </RevealStagger>
+
+      {cryptoPlan && (
+        <CryptoPayDialog
+          open={!!cryptoPlan}
+          onOpenChange={(o) => !o && setCryptoPlan(null)}
+          planSlug={cryptoPlan.slug as "pro" | "studio"}
+          planName={cryptoPlan.name}
+          priceUsd={`$${(cryptoPlan.price_usd_cents / 100).toFixed(0)}`}
+        />
+      )}
 
       <section className="mx-auto max-w-3xl px-6 pb-24">
         <h2 className="text-xl font-semibold">FAQ</h2>
