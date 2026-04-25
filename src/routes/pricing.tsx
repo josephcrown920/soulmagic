@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Reveal, RevealStagger, RevealItem } from "@/components/motion/Reveal";
 import { CryptoPayDialog } from "@/components/billing/CryptoPayDialog";
+import { WalletAddressesDialog } from "@/components/billing/WalletAddressesDialog";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
@@ -66,6 +67,7 @@ function Pricing() {
   const [currency, setCurrency] = useState<"USD" | "NGN">(detectCurrency());
   const [busy, setBusy] = useState<string | null>(null);
   const [cryptoPlan, setCryptoPlan] = useState<PlanRow | null>(null);
+  const [walletsOpen, setWalletsOpen] = useState(false);
   const checkoutFn = useServerFn(createCheckout);
 
   useEffect(() => {
@@ -140,7 +142,20 @@ function Pricing() {
             </button>
           ))}
         </div>
+
+        <div className="mt-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setWalletsOpen(true)}
+            className="rounded-full text-xs"
+          >
+            <Bitcoin className="mr-1.5 h-3.5 w-3.5" /> Show crypto wallet addresses
+          </Button>
+        </div>
       </Reveal>
+
+      <WalletAddressesDialog open={walletsOpen} onOpenChange={setWalletsOpen} />
 
       <RevealStagger className="mx-auto grid max-w-6xl gap-5 px-6 pb-24 md:grid-cols-3" stagger={0.12}>
         {sorted.map((plan) => {
