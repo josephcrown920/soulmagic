@@ -73,7 +73,7 @@ Deno.serve(async (req) => {
             type: "function",
             function: {
               name: "propose_preset",
-              description: "Return a Style Engine preset draft.",
+              description: "Return a Soul preset draft.",
               parameters: SCHEMA,
             },
           },

@@ -17,9 +17,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/generate")({
   head: () => ({
     meta: [
-      { title: "Generate — Style Engine" },
+      { title: "Generate — Soul" },
       { name: "description", content: "Generate consistent on-brand images from your trained LoRA using prompt templates." },
-      { property: "og:title", content: "Generate — Style Engine" },
+      { property: "og:title", content: "Generate — Soul" },
       { property: "og:description", content: "Generate consistent on-brand images from your trained LoRA using prompt templates." },
     ],
   }),

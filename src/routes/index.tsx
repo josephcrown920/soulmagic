@@ -21,9 +21,9 @@ import portraitCinematic from "@/assets/portrait-cinematic.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Style Engine — Lock your face & vibe across every video" },
+      { title: "Soul — Lock your face & vibe across every video" },
       { name: "description", content: "GPU-powered face restoration, color grading, LoRA training and vibe matching. Ship on-brand video in minutes." },
-      { property: "og:title", content: "Style Engine — Consistency Studio" },
+      { property: "og:title", content: "Soul — Consistency Studio" },
       { property: "og:description", content: "Drop a clip, lock in your style. Every output stays on-brand." },
       { property: "og:image", content: "/og-image.jpg" },
       { property: "twitter:image", content: "/og-image.jpg" },
@@ -37,7 +37,7 @@ function MarketingNav() {
     <header className="sticky top-0 z-30 flex items-center justify-between border-b border-border/40 bg-background/70 px-5 py-3 backdrop-blur-md md:px-12">
       <Link to="/" className="flex items-center gap-2">
         <div className="h-8 w-8 rounded-lg bg-gradient-primary shadow-elegant" />
-        <span className="font-semibold tracking-tight">Style Engine</span>
+        <span className="font-semibold tracking-tight">Soul</span>
       </Link>
       <nav className="hidden items-center gap-1 md:flex">
         <Link to="/pricing"><Button variant="ghost" size="sm">Pricing</Button></Link>
@@ -103,7 +103,7 @@ function Landing() {
           <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-border shadow-elegant">
             <img
               src={heroCreator}
-              alt="A creator portrait lit by Style Engine's signature magenta key light"
+              alt="A creator portrait lit by Soul's signature magenta key light"
               width={1600}
               height={2000}
               className="h-full w-full object-cover"
@@ -148,11 +148,11 @@ function Landing() {
             <Reveal delay={0.15}>
               <div className="group relative overflow-hidden rounded-2xl border border-primary/40 bg-card/60 shadow-elegant">
                 <div className="absolute left-4 top-4 z-10 rounded-full bg-gradient-primary px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary-foreground">
-                  After · Style Engine
+                  After · Soul
                 </div>
                 <img
                   src={afterClip}
-                  alt="Same clip after Style Engine: cinematic grade, restored face, locked vibe"
+                  alt="Same clip after Soul: cinematic grade, restored face, locked vibe"
                   width={1080}
                   height={1920}
                   loading="lazy"
@@ -314,7 +314,7 @@ function Landing() {
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 text-xs text-muted-foreground md:flex-row">
           <div className="flex items-center gap-2">
             <div className="h-5 w-5 rounded-md bg-gradient-primary" />
-            <span>© {new Date().getFullYear()} Style Engine</span>
+            <span>© {new Date().getFullYear()} Soul</span>
           </div>
           <div className="flex items-center gap-4">
             <Link to="/pricing" className="hover:text-foreground">Pricing</Link>

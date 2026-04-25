@@ -9,9 +9,9 @@ import portraitCinematic from "@/assets/portrait-cinematic.jpg";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Style Engine" },
-      { name: "description", content: "Style Engine is a consistency studio for creators who ship video at scale." },
-      { property: "og:title", content: "About Style Engine" },
+      { title: "About — Soul" },
+      { name: "description", content: "Soul is a consistency studio for creators who ship video at scale." },
+      { property: "og:title", content: "About Soul" },
       { property: "og:description", content: "Built for creators who need their face, vibe, and color grade locked across every clip." },
       { property: "og:image", content: "/og-image.jpg" },
     ],
@@ -25,7 +25,7 @@ function About() {
       <header className="sticky top-0 z-30 flex items-center justify-between border-b border-border/40 bg-background/70 px-5 py-3 backdrop-blur md:px-12">
         <Link to="/" className="flex items-center gap-2">
           <div className="h-8 w-8 rounded-lg bg-gradient-primary shadow-elegant" />
-          <span className="font-semibold tracking-tight">Style Engine</span>
+          <span className="font-semibold tracking-tight">Soul</span>
         </Link>
         <div className="flex items-center gap-2">
           <Link to="/pricing"><Button variant="ghost" size="sm">Pricing</Button></Link>
@@ -42,7 +42,7 @@ function About() {
         <Reveal delay={0.1}>
           <div className="mt-8 space-y-5 text-base leading-relaxed text-muted-foreground">
             <p>
-              Style Engine started as a frustration: every creator we knew was juggling
+              Soul started as a frustration: every creator we knew was juggling
               5 tools to keep their face, color grade, and overall vibe consistent across
               videos. Topaz for upscaling, DaVinci for color, ComfyUI for face restore,
               then back to Premiere for the final cut.
@@ -53,7 +53,7 @@ function About() {
               on real GPUs, not your laptop.
             </p>
             <p>
-              That's what Style Engine is. A consistency studio for the creator who
+              That's what Soul is. A consistency studio for the creator who
               ships every week.
             </p>
           </div>

@@ -65,7 +65,7 @@ function AuthPage() {
       <div className="w-full max-w-sm">
         <Link to="/" className="mb-6 flex items-center gap-2">
           <div className="h-8 w-8 rounded-lg bg-gradient-primary shadow-elegant" />
-          <span className="font-semibold tracking-tight">Style Engine</span>
+          <span className="font-semibold tracking-tight">Soul</span>
         </Link>
         <div className="rounded-2xl border border-border bg-card p-6 shadow-card">
           <h1 className="text-xl font-semibold">

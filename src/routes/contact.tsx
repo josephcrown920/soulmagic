@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Style Engine" },
-      { name: "description", content: "Get in touch with the Style Engine team." },
-      { property: "og:title", content: "Contact Style Engine" },
+      { title: "Contact — Soul" },
+      { name: "description", content: "Get in touch with the Soul team." },
+      { property: "og:title", content: "Contact Soul" },
       { property: "og:description", content: "Questions? Bug reports? We respond within 24h." },
     ],
   }),
@@ -20,7 +20,7 @@ function Contact() {
       <header className="sticky top-0 z-30 flex items-center justify-between border-b border-border/40 bg-background/70 px-5 py-3 backdrop-blur md:px-12">
         <Link to="/" className="flex items-center gap-2">
           <div className="h-8 w-8 rounded-lg bg-gradient-primary shadow-elegant" />
-          <span className="font-semibold tracking-tight">Style Engine</span>
+          <span className="font-semibold tracking-tight">Soul</span>
         </Link>
         <Link to="/pricing"><Button variant="ghost" size="sm">Pricing</Button></Link>
       </header>
