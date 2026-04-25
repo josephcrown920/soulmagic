@@ -34,6 +34,26 @@ type LoRA = {
   created_at: string;
 };
 
+const STALE_PENDING_MS = 30 * 60 * 1000;
+
+function getLoRAState(lora: LoRA) {
+  const createdAt = new Date(lora.created_at).getTime();
+  const ageMs = Number.isNaN(createdAt) ? 0 : Date.now() - createdAt;
+  const isStalePending = lora.status === "pending" && !lora.replicate_training_id && ageMs > STALE_PENDING_MS;
+
+  if (isStalePending) {
+    return {
+      status: "failed",
+      message: "This training never started on the backend. Delete it and retry.",
+    };
+  }
+
+  return {
+    status: lora.status,
+    message: lora.error_message,
+  };
+}
+
 function Loras() {
   const { user } = useAuth();
   const [items, setItems] = useState<LoRA[]>([]);
@@ -134,12 +154,13 @@ function Loras() {
 
 function LoRACard({ lora, onDelete }: { lora: LoRA; onDelete: () => void }) {
   const [syncing, setSyncing] = useState(false);
+  const derived = getLoRAState(lora);
   const statusIcon = {
     pending: <Clock className="h-4 w-4 text-muted-foreground" />,
     training: <Loader2 className="h-4 w-4 animate-spin text-primary" />,
     ready: <CheckCircle2 className="h-4 w-4 text-success" />,
     failed: <AlertCircle className="h-4 w-4 text-destructive" />,
-  }[lora.status] ?? null;
+  }[derived.status] ?? null;
 
   const sync = async () => {
     setSyncing(true);
@@ -166,7 +187,7 @@ function LoRACard({ lora, onDelete }: { lora: LoRA; onDelete: () => void }) {
           </div>
         </div>
         <div className="flex gap-1">
-          {(lora.status === "training" || lora.status === "pending") && lora.replicate_training_id && (
+          {(derived.status === "training" || derived.status === "pending") && lora.replicate_training_id && (
             <Button size="icon" variant="ghost" onClick={sync} disabled={syncing} title="Refresh status">
               <RefreshCw className={`h-4 w-4 ${syncing ? "animate-spin" : ""}`} />
             </Button>
@@ -179,23 +200,23 @@ function LoRACard({ lora, onDelete }: { lora: LoRA; onDelete: () => void }) {
 
       <div className="flex items-center gap-2 text-xs">
         {statusIcon}
-        <span className="capitalize">{lora.status}</span>
-        {lora.status === "training" && (
+        <span className="capitalize">{derived.status}</span>
+        {derived.status === "training" && (
           <span className="text-muted-foreground">{Math.round(Number(lora.progress ?? 0))}%</span>
         )}
       </div>
 
-      {lora.status === "training" && (
+      {derived.status === "training" && (
         <div className="h-1.5 overflow-hidden rounded-full bg-muted">
           <div className="h-full bg-gradient-primary transition-all" style={{ width: `${lora.progress ?? 0}%` }} />
         </div>
       )}
 
-      {lora.status === "failed" && (
-        <div className="rounded-md bg-destructive/10 p-2 text-xs text-destructive">{lora.error_message}</div>
+      {derived.status === "failed" && derived.message && (
+        <div className="rounded-md bg-destructive/10 p-2 text-xs text-destructive">{derived.message}</div>
       )}
 
-      {lora.status === "ready" && <GenerateDialog loraId={lora.id} />}
+      {derived.status === "ready" && <GenerateDialog loraId={lora.id} />}
     </div>
   );
 }
