@@ -377,10 +377,10 @@ function Landing() {
               ["Avg cost / 60s clip", "$0.40", "$2.50", "Free*", "$1.20"],
               ["Time to result", "~3 min", "~25 min", "Hours", "~15 min"],
             ].map((row, i) => (
-              <div key={i} className={cn("grid grid-cols-5 border-b border-border/50 text-sm last:border-0", i % 2 && "bg-card/20")}>
+              <div key={i} className={`grid grid-cols-5 border-b border-border/50 text-sm last:border-0 ${i % 2 ? "bg-card/20" : ""}`}>
                 <div className="p-4 font-medium">{row[0] as string}</div>
                 {row.slice(1).map((cell, j) => (
-                  <div key={j} className={cn("p-4 text-center", j === 0 && "text-primary font-semibold")}>
+                  <div key={j} className={`p-4 text-center ${j === 0 ? "text-primary font-semibold" : ""}`}>
                     {typeof cell === "boolean" ? (
                       cell ? <Check className="mx-auto h-4 w-4 text-primary" /> : <XIcon className="mx-auto h-4 w-4 text-muted-foreground/50" />
                     ) : cell}
