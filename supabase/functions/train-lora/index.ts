@@ -129,7 +129,7 @@ Deno.serve(async (req) => {
         body: JSON.stringify({
           destination: `${owner}/${safeName}`,
           webhook: webhookUrl,
-          webhook_events_filter: ["completed"],
+          webhook_events_filter: ["start", "completed"],
           input: {
             input_images: signed.signedUrl,
             steps: lora.training_steps ?? 1000,
