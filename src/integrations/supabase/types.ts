@@ -46,8 +46,11 @@ export type Database = {
       }
       crypto_payments: {
         Row: {
+          admin_notes: string | null
+          coin: string | null
           created_at: string
           id: string
+          network: string | null
           nowpayments_invoice_id: string | null
           nowpayments_payment_id: string | null
           order_id: string
@@ -58,13 +61,20 @@ export type Database = {
           price_amount: number
           price_currency: string
           raw: Json | null
+          reviewed_at: string | null
+          reviewed_by: string | null
           status: string
+          tx_hash: string | null
           updated_at: string
           user_id: string
+          wallet_id: string | null
         }
         Insert: {
+          admin_notes?: string | null
+          coin?: string | null
           created_at?: string
           id?: string
+          network?: string | null
           nowpayments_invoice_id?: string | null
           nowpayments_payment_id?: string | null
           order_id: string
@@ -75,13 +85,20 @@ export type Database = {
           price_amount: number
           price_currency?: string
           raw?: Json | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
           status?: string
+          tx_hash?: string | null
           updated_at?: string
           user_id: string
+          wallet_id?: string | null
         }
         Update: {
+          admin_notes?: string | null
+          coin?: string | null
           created_at?: string
           id?: string
+          network?: string | null
           nowpayments_invoice_id?: string | null
           nowpayments_payment_id?: string | null
           order_id?: string
@@ -92,9 +109,60 @@ export type Database = {
           price_amount?: number
           price_currency?: string
           raw?: Json | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
           status?: string
+          tx_hash?: string | null
           updated_at?: string
           user_id?: string
+          wallet_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crypto_payments_wallet_id_fkey"
+            columns: ["wallet_id"]
+            isOneToOne: false
+            referencedRelation: "crypto_wallets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crypto_wallets: {
+        Row: {
+          address: string
+          coin: string
+          created_at: string
+          id: string
+          is_active: boolean
+          label: string | null
+          memo: string | null
+          network: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          address: string
+          coin: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          label?: string | null
+          memo?: string | null
+          network: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          address?: string
+          coin?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          label?: string | null
+          memo?: string | null
+          network?: string
+          sort_order?: number
+          updated_at?: string
         }
         Relationships: []
       }
