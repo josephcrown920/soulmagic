@@ -42,7 +42,10 @@ function MarketingNav() {
     <header className="sticky top-0 z-30 flex items-center justify-between border-b border-border/40 bg-background/70 px-5 py-3 backdrop-blur-md md:px-12">
       <Link to="/" className="flex items-center gap-2">
         <div className="h-8 w-8 rounded-lg bg-gradient-primary shadow-elegant" />
-        <span className="font-semibold tracking-tight">Soul</span>
+        <div className="flex flex-col leading-tight">
+          <span className="font-semibold tracking-tight">Soul Studio</span>
+          <span className="text-[9px] uppercase tracking-widest text-muted-foreground">One face · Every frame</span>
+        </div>
       </Link>
       <nav className="hidden items-center gap-1 md:flex">
         <Link to="/pricing"><Button variant="ghost" size="sm">Pricing</Button></Link>
@@ -319,7 +322,7 @@ function Landing() {
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 text-xs text-muted-foreground md:flex-row">
           <div className="flex items-center gap-2">
             <div className="h-5 w-5 rounded-md bg-gradient-primary" />
-            <span>© {new Date().getFullYear()} Soul</span>
+            <span>© {new Date().getFullYear()} Soul Studio</span>
           </div>
           <div className="flex items-center gap-4">
             <Link to="/pricing" className="hover:text-foreground">Pricing</Link>
