@@ -24,7 +24,7 @@ import portraitLinkedin from "@/assets/portrait-linkedin.jpg";
 import portraitInstagram from "@/assets/portrait-instagram.jpg";
 import portraitPodcast from "@/assets/portrait-podcast.jpg";
 import portraitCinematic from "@/assets/portrait-cinematic.jpg";
-import logoSoul from "@/assets/logo-soul.png";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
