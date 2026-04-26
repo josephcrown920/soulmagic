@@ -334,3 +334,58 @@ function ReducedMotionRow() {
     </div>
   );
 }
+
+function ExportDataRow() {
+  const [exporting, setExporting] = useState(false);
+
+  const handleExport = async () => {
+    setExporting(true);
+    const t = toast.loading("Preparing your export… this may take a minute.");
+    try {
+      const { data: sess } = await supabase.auth.getSession();
+      const token = sess.session?.access_token;
+      if (!token) throw new Error("Not signed in");
+
+      const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/export-user-data`;
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+        },
+      });
+      if (!res.ok) {
+        const txt = await res.text();
+        throw new Error(txt || `Export failed (${res.status})`);
+      }
+      const blob = await res.blob();
+      const dlUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = dlUrl;
+      a.download = `soul-export-${new Date().toISOString().slice(0, 10)}.zip`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(dlUrl);
+      toast.success("Export ready", { id: t });
+    } catch (e: any) {
+      toast.error(e?.message ?? "Export failed", { id: t });
+    } finally {
+      setExporting(false);
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-between rounded-lg border border-border bg-background/30 p-3">
+      <div className="pr-4">
+        <Label>Export my data</Label>
+        <div className="text-xs text-muted-foreground">
+          Download a ZIP of your generated images, video outputs, LoRA previews, and a JSON manifest.
+        </div>
+      </div>
+      <Button onClick={handleExport} disabled={exporting} variant="secondary">
+        {exporting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Preparing…</> : "Export ZIP"}
+      </Button>
+    </div>
+  );
+}
