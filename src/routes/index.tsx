@@ -44,13 +44,6 @@ function MarketingNav() {
   return (
     <header className="sticky top-0 z-30 flex items-center justify-between border-b border-border/40 bg-background/70 px-5 py-3 backdrop-blur-md md:px-12">
       <Link to="/" className="flex items-center gap-2.5">
-        <img
-          src={logoSoul}
-          alt="Soul Studio logo"
-          width={40}
-          height={40}
-          className="h-9 w-9 object-contain"
-        />
         <div className="flex flex-col leading-tight">
           <span className="font-semibold tracking-tight">Soul Studio</span>
           <span className="text-[9px] uppercase tracking-widest text-muted-foreground">One face · Every frame</span>
