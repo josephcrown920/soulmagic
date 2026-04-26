@@ -24,6 +24,7 @@ import portraitLinkedin from "@/assets/portrait-linkedin.jpg";
 import portraitInstagram from "@/assets/portrait-instagram.jpg";
 import portraitPodcast from "@/assets/portrait-podcast.jpg";
 import portraitCinematic from "@/assets/portrait-cinematic.jpg";
+import logoSoul from "@/assets/logo-soul.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -42,8 +43,14 @@ export const Route = createFileRoute("/")({
 function MarketingNav() {
   return (
     <header className="sticky top-0 z-30 flex items-center justify-between border-b border-border/40 bg-background/70 px-5 py-3 backdrop-blur-md md:px-12">
-      <Link to="/" className="flex items-center gap-2">
-        <div className="h-8 w-8 rounded-lg bg-gradient-primary shadow-elegant" />
+      <Link to="/" className="flex items-center gap-2.5">
+        <img
+          src={logoSoul}
+          alt="Soul Studio logo"
+          width={40}
+          height={40}
+          className="h-9 w-9 object-contain"
+        />
         <div className="flex flex-col leading-tight">
           <span className="font-semibold tracking-tight">Soul Studio</span>
           <span className="text-[9px] uppercase tracking-widest text-muted-foreground">One face · Every frame</span>
