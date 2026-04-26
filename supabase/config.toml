@@ -8,3 +8,6 @@ verify_jwt = true
 
 [functions.sync-lora-status]
 verify_jwt = true
+
+[functions.support-chat]
+verify_jwt = false
