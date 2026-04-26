@@ -171,6 +171,8 @@ function Settings() {
         <TabsContent value="advanced" className="space-y-5 rounded-2xl border border-border bg-card p-6 shadow-card">
           <ReducedMotionRow />
 
+          <ExportDataRow />
+
           <div>
             <div className="text-sm font-semibold">Replicate API token</div>
             <p className="mt-1 text-xs text-muted-foreground">
