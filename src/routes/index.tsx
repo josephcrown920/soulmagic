@@ -13,11 +13,11 @@ import {
 } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
-import { MusicAdFloatingPlayer } from "@/components/marketing/MusicAd";
+import { MusicAdBanner, MusicAdFloatingPlayer } from "@/components/marketing/MusicAd";
 import heroCreator from "@/assets/hero-creator.jpg";
-import stepTrain from "@/assets/step-train.jpg";
-import stepPreset from "@/assets/step-preset.jpg";
-import stepGenerate from "@/assets/step-generate.jpg";
+import loraCoffeeWalk from "@/assets/lora-coffee-walk.jpg";
+import loraBookstore from "@/assets/lora-bookstore.jpg";
+import loraNeonNight from "@/assets/lora-neon-night.jpg";
 import portraitLinkedin from "@/assets/portrait-linkedin.jpg";
 import portraitInstagram from "@/assets/portrait-instagram.jpg";
 import portraitPodcast from "@/assets/portrait-podcast.jpg";
