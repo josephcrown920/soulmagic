@@ -13,11 +13,11 @@ import {
 } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
-import { MusicAdFloatingPlayer } from "@/components/marketing/MusicAd";
+import { MusicAdBanner, MusicAdFloatingPlayer } from "@/components/marketing/MusicAd";
 import heroCreator from "@/assets/hero-creator.jpg";
-import stepTrain from "@/assets/step-train.jpg";
-import stepPreset from "@/assets/step-preset.jpg";
-import stepGenerate from "@/assets/step-generate.jpg";
+import loraCoffeeWalk from "@/assets/lora-coffee-walk.jpg";
+import loraBookstore from "@/assets/lora-bookstore.jpg";
+import loraNeonNight from "@/assets/lora-neon-night.jpg";
 import portraitLinkedin from "@/assets/portrait-linkedin.jpg";
 import portraitInstagram from "@/assets/portrait-instagram.jpg";
 import portraitPodcast from "@/assets/portrait-podcast.jpg";
@@ -75,6 +75,7 @@ function Landing() {
   return (
     <div className="min-h-screen">
       <MarketingNav />
+      <MusicAdBanner />
 
       {/* Hero — split layout with image */}
       <section className="mx-auto grid max-w-6xl items-center gap-10 px-6 pt-16 pb-24 md:grid-cols-2 md:pt-24">
@@ -110,8 +111,8 @@ function Landing() {
         <Reveal delay={0.15} className="relative">
           <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-border shadow-elegant">
             <img
-              src={heroCreator}
-              alt="A creator portrait lit by Soul's signature magenta key light"
+              src={portraitCinematic}
+              alt="A cinematic portrait generated from a trained Soul LoRA"
               width={1600}
               height={2000}
               className="h-full w-full object-cover"
@@ -197,9 +198,9 @@ function Landing() {
           </Reveal>
           <RevealStagger className="grid gap-8 md:grid-cols-3" stagger={0.12}>
             {[
-              { n: "01", t: "Train", d: "Upload 15-30 reference photos. We train a LoRA on your face or style.", img: stepTrain, alt: "A scattered set of polaroid reference photos" },
-              { n: "02", t: "Preset", d: "Pick a LUT, dial in face strength, save as a one-click preset.", img: stepPreset, alt: "Hands adjusting a glowing color grading panel" },
-              { n: "03", t: "Process", d: "Drop a clip — GPU pipeline applies it frame-by-frame, watermark-free.", img: stepGenerate, alt: "Editor workstation with a graded portrait timeline" },
+              { n: "01", t: "Train", d: "Upload 15-30 reference photos. We train a LoRA on your face or style.", img: loraCoffeeWalk, alt: "Trained LoRA generating a golden-hour street scene with a coffee cup" },
+              { n: "02", t: "Preset", d: "Pick a LUT, dial in face strength, save as a one-click preset.", img: loraBookstore, alt: "Same LoRA restyled into a warm bookstore scene" },
+              { n: "03", t: "Process", d: "Drop a clip — GPU pipeline applies it frame-by-frame, watermark-free.", img: loraNeonNight, alt: "Same LoRA restyled into a neon-lit night street scene" },
             ].map((s) => (
               <RevealItem key={s.n} className="overflow-hidden rounded-2xl border border-border bg-background/40 shadow-card">
                 <div className="aspect-[4/3] w-full overflow-hidden">
@@ -243,7 +244,7 @@ function Landing() {
             { img: portraitLinkedin, label: "LinkedIn", sub: "Trust" },
             { img: portraitInstagram, label: "Instagram", sub: "Lifestyle" },
             { img: portraitPodcast, label: "Podcast", sub: "Authority" },
-            { img: portraitCinematic, label: "Cinematic", sub: "Story" },
+            { img: heroCreator, label: "Cinematic", sub: "Story" },
           ].map((p) => (
             <RevealItem key={p.label} className="group relative overflow-hidden rounded-2xl border border-border bg-card/60 shadow-card">
               <div className="aspect-[4/5] w-full overflow-hidden">
@@ -346,37 +347,7 @@ function Landing() {
         </Reveal>
       </section>
 
-      {/* Sample gallery — masonry */}
-      <section className="border-y border-border/40 bg-card/30 py-24">
-        <div className="mx-auto max-w-6xl px-6">
-          <Reveal className="mb-10 text-center">
-            <div className="text-xs uppercase tracking-widest text-primary">From the community</div>
-            <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
-              Real prompts. Real LoRAs. Real outputs.
-            </h2>
-          </Reveal>
-          <div className="columns-2 gap-4 md:columns-4">
-            {[
-              { img: portraitLinkedin, p: "executive headshot, soft window light, charcoal blazer", h: "h-72" },
-              { img: portraitInstagram, p: "golden hour rooftop, linen shirt, candid laugh", h: "h-96" },
-              { img: portraitPodcast, p: "studio mic close-up, neon backlight, moody cinematic", h: "h-80" },
-              { img: portraitCinematic, p: "anamorphic close-up, teal/orange grade, film grain", h: "h-[26rem]" },
-              { img: portraitLinkedin, p: "minimal white backdrop, editorial fashion lighting", h: "h-64" },
-              { img: portraitInstagram, p: "café morning, latte in hand, sunlit window bokeh", h: "h-80" },
-              { img: portraitPodcast, p: "vintage record store, warm tungsten, grainy 35mm", h: "h-96" },
-              { img: portraitCinematic, p: "neo-noir alley, rain reflections, deep contrast", h: "h-72" },
-            ].map((g, i) => (
-              <div key={i} className="group relative mb-4 break-inside-avoid overflow-hidden rounded-xl border border-border">
-                <img src={g.img} alt={g.p} loading="lazy" className={cn("w-full object-cover transition-transform duration-700 group-hover:scale-105", g.h)} />
-                <div className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-background via-background/80 to-transparent p-3 transition-transform duration-300 group-hover:translate-y-0">
-                  <div className="text-[10px] uppercase tracking-widest text-primary">prompt</div>
-                  <div className="line-clamp-2 text-xs text-foreground">{g.p}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Sample gallery removed — duplicates trimmed for length */}
 
       {/* Pricing teaser */}
       <section className="mx-auto max-w-6xl px-6 py-24">
@@ -465,21 +436,7 @@ function Landing() {
         </div>
       </section>
 
-      {/* Press / As seen in */}
-      <section className="border-b border-border/40 py-12">
-        <div className="mx-auto max-w-5xl px-6 text-center">
-          <div className="mb-5 text-[10px] uppercase tracking-[0.25em] text-muted-foreground">As featured on</div>
-          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-sm font-bold tracking-[0.2em] text-muted-foreground">
-            <span>PRODUCT HUNT #3</span>
-            <span>·</span>
-            <span>INDIE HACKERS</span>
-            <span>·</span>
-            <span>TECHCABAL</span>
-            <span>·</span>
-            <span>MAKER LOG</span>
-          </div>
-        </div>
-      </section>
+      {/* Press section removed for length */}
 
       {/* FAQ */}
       <section className="mx-auto max-w-3xl px-6 py-24">
