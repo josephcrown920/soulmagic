@@ -15,8 +15,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import { MusicAdFloatingPlayer } from "@/components/marketing/MusicAd";
 import heroCreator from "@/assets/hero-creator.jpg";
-import beforeClip from "@/assets/before-clip.jpg";
-import afterClip from "@/assets/after-clip.jpg";
 import stepTrain from "@/assets/step-train.jpg";
 import stepPreset from "@/assets/step-preset.jpg";
 import stepGenerate from "@/assets/step-generate.jpg";
@@ -159,54 +157,6 @@ function Landing() {
               <div className="mt-1 text-xs uppercase tracking-widest text-muted-foreground">{s.l}</div>
             </div>
           ))}
-        </div>
-      </section>
-
-      <section className="border-y border-border/40 bg-card/30 py-20">
-        <div className="mx-auto max-w-6xl px-6">
-          <Reveal className="mb-12 text-center">
-            <div className="text-xs uppercase tracking-widest text-primary">The transformation</div>
-            <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
-              Raw clip in. Cinema-grade out.
-            </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
-              Same person. Same upload. One pipeline. Watch the difference Style
-              Engine makes between what your phone shoots and what your audience sees.
-            </p>
-          </Reveal>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            <Reveal>
-              <div className="group relative overflow-hidden rounded-2xl border border-border bg-card/60 shadow-card">
-                <div className="absolute left-4 top-4 z-10 rounded-full bg-background/80 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground backdrop-blur">
-                  Before · raw phone clip
-                </div>
-                <img
-                  src={beforeClip}
-                  alt="Raw smartphone clip with harsh lighting and flat color"
-                  width={1080}
-                  height={1920}
-                  loading="lazy"
-                  className="aspect-[9/16] w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
-            </Reveal>
-            <Reveal delay={0.15}>
-              <div className="group relative overflow-hidden rounded-2xl border border-primary/40 bg-card/60 shadow-elegant">
-                <div className="absolute left-4 top-4 z-10 rounded-full bg-gradient-primary px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary-foreground">
-                  After · Soul
-                </div>
-                <img
-                  src={afterClip}
-                  alt="Same clip after Soul: cinematic grade, restored face, locked vibe"
-                  width={1080}
-                  height={1920}
-                  loading="lazy"
-                  className="aspect-[9/16] w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
-            </Reveal>
-          </div>
         </div>
       </section>
 
