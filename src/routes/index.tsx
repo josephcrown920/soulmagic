@@ -75,6 +75,7 @@ function Landing() {
   return (
     <div className="min-h-screen">
       <MarketingNav />
+      <MusicAdBanner />
 
       {/* Hero — split layout with image */}
       <section className="mx-auto grid max-w-6xl items-center gap-10 px-6 pt-16 pb-24 md:grid-cols-2 md:pt-24">
@@ -110,8 +111,8 @@ function Landing() {
         <Reveal delay={0.15} className="relative">
           <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-border shadow-elegant">
             <img
-              src={heroCreator}
-              alt="A creator portrait lit by Soul's signature magenta key light"
+              src={portraitCinematic}
+              alt="A cinematic portrait generated from a trained Soul LoRA"
               width={1600}
               height={2000}
               className="h-full w-full object-cover"
@@ -197,9 +198,9 @@ function Landing() {
           </Reveal>
           <RevealStagger className="grid gap-8 md:grid-cols-3" stagger={0.12}>
             {[
-              { n: "01", t: "Train", d: "Upload 15-30 reference photos. We train a LoRA on your face or style.", img: stepTrain, alt: "A scattered set of polaroid reference photos" },
-              { n: "02", t: "Preset", d: "Pick a LUT, dial in face strength, save as a one-click preset.", img: stepPreset, alt: "Hands adjusting a glowing color grading panel" },
-              { n: "03", t: "Process", d: "Drop a clip — GPU pipeline applies it frame-by-frame, watermark-free.", img: stepGenerate, alt: "Editor workstation with a graded portrait timeline" },
+              { n: "01", t: "Train", d: "Upload 15-30 reference photos. We train a LoRA on your face or style.", img: loraCoffeeWalk, alt: "Trained LoRA generating a golden-hour street scene with a coffee cup" },
+              { n: "02", t: "Preset", d: "Pick a LUT, dial in face strength, save as a one-click preset.", img: loraBookstore, alt: "Same LoRA restyled into a warm bookstore scene" },
+              { n: "03", t: "Process", d: "Drop a clip — GPU pipeline applies it frame-by-frame, watermark-free.", img: loraNeonNight, alt: "Same LoRA restyled into a neon-lit night street scene" },
             ].map((s) => (
               <RevealItem key={s.n} className="overflow-hidden rounded-2xl border border-border bg-background/40 shadow-card">
                 <div className="aspect-[4/3] w-full overflow-hidden">
