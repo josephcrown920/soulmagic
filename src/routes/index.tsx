@@ -347,37 +347,7 @@ function Landing() {
         </Reveal>
       </section>
 
-      {/* Sample gallery — masonry */}
-      <section className="border-y border-border/40 bg-card/30 py-24">
-        <div className="mx-auto max-w-6xl px-6">
-          <Reveal className="mb-10 text-center">
-            <div className="text-xs uppercase tracking-widest text-primary">From the community</div>
-            <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
-              Real prompts. Real LoRAs. Real outputs.
-            </h2>
-          </Reveal>
-          <div className="columns-2 gap-4 md:columns-4">
-            {[
-              { img: portraitLinkedin, p: "executive headshot, soft window light, charcoal blazer", h: "h-72" },
-              { img: portraitInstagram, p: "golden hour rooftop, linen shirt, candid laugh", h: "h-96" },
-              { img: portraitPodcast, p: "studio mic close-up, neon backlight, moody cinematic", h: "h-80" },
-              { img: portraitCinematic, p: "anamorphic close-up, teal/orange grade, film grain", h: "h-[26rem]" },
-              { img: portraitLinkedin, p: "minimal white backdrop, editorial fashion lighting", h: "h-64" },
-              { img: portraitInstagram, p: "café morning, latte in hand, sunlit window bokeh", h: "h-80" },
-              { img: portraitPodcast, p: "vintage record store, warm tungsten, grainy 35mm", h: "h-96" },
-              { img: portraitCinematic, p: "neo-noir alley, rain reflections, deep contrast", h: "h-72" },
-            ].map((g, i) => (
-              <div key={i} className="group relative mb-4 break-inside-avoid overflow-hidden rounded-xl border border-border">
-                <img src={g.img} alt={g.p} loading="lazy" className={cn("w-full object-cover transition-transform duration-700 group-hover:scale-105", g.h)} />
-                <div className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-background via-background/80 to-transparent p-3 transition-transform duration-300 group-hover:translate-y-0">
-                  <div className="text-[10px] uppercase tracking-widest text-primary">prompt</div>
-                  <div className="line-clamp-2 text-xs text-foreground">{g.p}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Sample gallery removed — duplicates trimmed for length */}
 
       {/* Pricing teaser */}
       <section className="mx-auto max-w-6xl px-6 py-24">
@@ -466,21 +436,7 @@ function Landing() {
         </div>
       </section>
 
-      {/* Press / As seen in */}
-      <section className="border-b border-border/40 py-12">
-        <div className="mx-auto max-w-5xl px-6 text-center">
-          <div className="mb-5 text-[10px] uppercase tracking-[0.25em] text-muted-foreground">As featured on</div>
-          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-sm font-bold tracking-[0.2em] text-muted-foreground">
-            <span>PRODUCT HUNT #3</span>
-            <span>·</span>
-            <span>INDIE HACKERS</span>
-            <span>·</span>
-            <span>TECHCABAL</span>
-            <span>·</span>
-            <span>MAKER LOG</span>
-          </div>
-        </div>
-      </section>
+      {/* Press section removed for length */}
 
       {/* FAQ */}
       <section className="mx-auto max-w-3xl px-6 py-24">
