@@ -244,7 +244,7 @@ function Landing() {
             { img: portraitLinkedin, label: "LinkedIn", sub: "Trust" },
             { img: portraitInstagram, label: "Instagram", sub: "Lifestyle" },
             { img: portraitPodcast, label: "Podcast", sub: "Authority" },
-            { img: portraitCinematic, label: "Cinematic", sub: "Story" },
+            { img: heroCreator, label: "Cinematic", sub: "Story" },
           ].map((p) => (
             <RevealItem key={p.label} className="group relative overflow-hidden rounded-2xl border border-border bg-card/60 shadow-card">
               <div className="aspect-[4/5] w-full overflow-hidden">
