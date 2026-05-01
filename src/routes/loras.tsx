@@ -31,6 +31,7 @@ type LoRA = {
   progress: number | null;
   error_message: string | null;
   replicate_training_id: string | null;
+  quality: string | null;
   created_at: string;
 };
 
