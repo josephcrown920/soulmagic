@@ -264,7 +264,7 @@ function Train() {
         {submitting ? (
           <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Starting…</>
         ) : (
-          <><Brain className="mr-2 h-4 w-4" /> Start training (~20 min, ~$2 GPU)</>
+          <><Brain className="mr-2 h-4 w-4" /> {isPro ? "Start Pro training (~35 min)" : "Start training (~20 min)"}</>
         )}
       </Button>
     </div>
