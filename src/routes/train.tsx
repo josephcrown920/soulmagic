@@ -81,6 +81,7 @@ function Train() {
           kind,
           trigger_word: trigger.trim() || "TOK",
           training_steps: steps,
+          quality,
           status: "pending",
         })
         .select()
