@@ -33,8 +33,19 @@ function Train() {
   const [name, setName] = useState("");
   const [kind, setKind] = useState<"face" | "style">("face");
   const [trigger, setTrigger] = useState("TOK");
+  const [quality, setQuality] = useState<"standard" | "pro">("standard");
   const [steps, setSteps] = useState(1000);
   const [submitting, setSubmitting] = useState(false);
+
+  const isPro = quality === "pro";
+
+  const onQualityChange = (v: "standard" | "pro") => {
+    setQuality(v);
+    // Bump steps into the recommended range for the selected preset, but only
+    // if the user hasn't pushed the slider above the new floor already.
+    if (v === "pro" && steps < 1500) setSteps(1800);
+    if (v === "standard" && steps > 1500) setSteps(1000);
+  };
 
   const onDrop = useCallback((accepted: File[]) => {
     const next = accepted.map((f) => ({ file: f, preview: URL.createObjectURL(f) }));
