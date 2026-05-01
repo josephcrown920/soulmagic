@@ -182,7 +182,14 @@ function LoRACard({ lora, onDelete }: { lora: LoRA; onDelete: () => void }) {
     <div className="space-y-3 rounded-2xl border border-border bg-card p-5 shadow-card">
       <div className="flex items-start justify-between">
         <div className="min-w-0">
-          <div className="truncate text-base font-semibold">{lora.name}</div>
+          <div className="flex items-center gap-2">
+            <div className="truncate text-base font-semibold">{lora.name}</div>
+            {lora.quality === "pro" && (
+              <span className="rounded-full bg-gradient-primary px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-primary-foreground">
+                Pro
+              </span>
+            )}
+          </div>
           <div className="text-xs text-muted-foreground">
             {lora.kind} · trigger: <code className="text-foreground">{lora.trigger_word ?? "—"}</code>
           </div>
