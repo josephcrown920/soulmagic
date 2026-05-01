@@ -118,6 +118,33 @@ Deno.serve(async (req) => {
 
     const webhookUrl = `${APP_URL}/api/public/hooks/replicate-training?loraId=${loraId}`;
 
+    // Quality preset — "pro" produces a stronger LoRA at the cost of more
+    // training time. Standard preserves prior behavior exactly.
+    const isPro = lora.quality === "pro";
+    const trainerInput = isPro
+      ? {
+          input_images: signed.signedUrl,
+          steps: lora.training_steps ?? 1800,
+          trigger_word: lora.trigger_word ?? "TOK",
+          lora_rank: 32,
+          optimizer: "adamw8bit",
+          batch_size: 1,
+          resolution: "768,1024",
+          autocaption: true,
+          learning_rate: 0.0003,
+        }
+      : {
+          input_images: signed.signedUrl,
+          steps: lora.training_steps ?? 1000,
+          trigger_word: lora.trigger_word ?? "TOK",
+          lora_rank: 16,
+          optimizer: "adamw8bit",
+          batch_size: 1,
+          resolution: "512,768,1024",
+          autocaption: true,
+          learning_rate: 0.0004,
+        };
+
     const trainRes = await fetch(
       `https://api.replicate.com/v1/models/ostris/flux-dev-lora-trainer/versions/${trainerVersion}/trainings`,
       {
@@ -130,17 +157,7 @@ Deno.serve(async (req) => {
           destination: `${owner}/${safeName}`,
           webhook: webhookUrl,
           webhook_events_filter: ["start", "completed"],
-          input: {
-            input_images: signed.signedUrl,
-            steps: lora.training_steps ?? 1000,
-            trigger_word: lora.trigger_word ?? "TOK",
-            lora_rank: 16,
-            optimizer: "adamw8bit",
-            batch_size: 1,
-            resolution: "512,768,1024",
-            autocaption: true,
-            learning_rate: 0.0004,
-          },
+          input: trainerInput,
         }),
       },
     );

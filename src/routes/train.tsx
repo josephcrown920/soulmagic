@@ -33,8 +33,19 @@ function Train() {
   const [name, setName] = useState("");
   const [kind, setKind] = useState<"face" | "style">("face");
   const [trigger, setTrigger] = useState("TOK");
+  const [quality, setQuality] = useState<"standard" | "pro">("standard");
   const [steps, setSteps] = useState(1000);
   const [submitting, setSubmitting] = useState(false);
+
+  const isPro = quality === "pro";
+
+  const onQualityChange = (v: "standard" | "pro") => {
+    setQuality(v);
+    // Bump steps into the recommended range for the selected preset, but only
+    // if the user hasn't pushed the slider above the new floor already.
+    if (v === "pro" && steps < 1500) setSteps(1800);
+    if (v === "standard" && steps > 1500) setSteps(1000);
+  };
 
   const onDrop = useCallback((accepted: File[]) => {
     const next = accepted.map((f) => ({ file: f, preview: URL.createObjectURL(f) }));
@@ -70,6 +81,7 @@ function Train() {
           kind,
           trigger_word: trigger.trim() || "TOK",
           training_steps: steps,
+          quality,
           status: "pending",
         })
         .select()
@@ -131,6 +143,39 @@ function Train() {
       </div>
 
       <div className="space-y-4 rounded-2xl border border-border bg-card p-6 shadow-card">
+        <div>
+          <Label className="text-sm">Model strength</Label>
+          <div className="mt-2 grid gap-3 sm:grid-cols-2">
+            <button
+              type="button"
+              onClick={() => onQualityChange("standard")}
+              className={`rounded-xl border p-4 text-left transition-colors ${
+                !isPro ? "border-primary bg-primary/5" : "border-border hover:border-primary/40"
+              }`}
+            >
+              <div className="text-sm font-semibold">Standard</div>
+              <div className="mt-1 text-xs text-muted-foreground">
+                ~20 min · balanced quality. Great for most use cases.
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() => onQualityChange("pro")}
+              className={`relative rounded-xl border p-4 text-left transition-colors ${
+                isPro ? "border-primary bg-primary/5" : "border-border hover:border-primary/40"
+              }`}
+            >
+              <span className="absolute right-3 top-3 rounded-full bg-gradient-primary px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary-foreground">
+                Best quality
+              </span>
+              <div className="text-sm font-semibold">Pro — stronger</div>
+              <div className="mt-1 text-xs text-muted-foreground">
+                ~35 min · sharper likeness, better prompt adherence. Higher rank + more steps.
+              </div>
+            </button>
+          </div>
+        </div>
+
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <Label>LoRA name</Label>
@@ -158,8 +203,18 @@ function Train() {
               <Label>Training steps</Label>
               <span className="text-xs text-muted-foreground">{steps}</span>
             </div>
-            <Slider value={[steps]} min={500} max={2500} step={100} onValueChange={(v) => setSteps(v[0])} />
-            <p className="mt-1 text-xs text-muted-foreground">More steps = better fit, longer training.</p>
+            <Slider
+              value={[steps]}
+              min={isPro ? 1500 : 500}
+              max={2500}
+              step={100}
+              onValueChange={(v) => setSteps(v[0])}
+            />
+            <p className="mt-1 text-xs text-muted-foreground">
+              {isPro
+                ? "Pro uses a higher floor for stronger results."
+                : "More steps = better fit, longer training."}
+            </p>
           </div>
         </div>
       </div>
@@ -209,7 +264,7 @@ function Train() {
         {submitting ? (
           <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Starting…</>
         ) : (
-          <><Brain className="mr-2 h-4 w-4" /> Start training (~20 min, ~$2 GPU)</>
+          <><Brain className="mr-2 h-4 w-4" /> {isPro ? "Start Pro training (~35 min)" : "Start training (~20 min)"}</>
         )}
       </Button>
     </div>

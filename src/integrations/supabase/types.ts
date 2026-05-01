@@ -275,6 +275,7 @@ export type Database = {
           name: string
           preview_path: string | null
           progress: number | null
+          quality: string
           replicate_model_name: string | null
           replicate_model_owner: string | null
           replicate_training_id: string | null
@@ -297,6 +298,7 @@ export type Database = {
           name: string
           preview_path?: string | null
           progress?: number | null
+          quality?: string
           replicate_model_name?: string | null
           replicate_model_owner?: string | null
           replicate_training_id?: string | null
@@ -319,6 +321,7 @@ export type Database = {
           name?: string
           preview_path?: string | null
           progress?: number | null
+          quality?: string
           replicate_model_name?: string | null
           replicate_model_owner?: string | null
           replicate_training_id?: string | null
