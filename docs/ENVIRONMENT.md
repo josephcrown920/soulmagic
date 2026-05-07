@@ -40,6 +40,7 @@ These run inside Supabase's hosted Deno runtime, **not** in the Worker. Each mus
 | `REPLICATE_API_TOKEN` | `train-lora`, `process-video`, `sync-lora-status`, `generate-image`, `src/routes/api/public/hooks/replicate-training.ts` | Auth token for Replicate (training, face restoration, image generation, webhook re-fetch). |
 | `LOVABLE_API_KEY` | `vibe-match` | Auth token for the Lovable AI Gateway. |
 | `APP_URL` | `train-lora` (optional) | Public base URL the Replicate training webhook will call back. Falls back to `https://project--1d7ae0ee-b549-4184-908f-8a647c314c6d.lovable.app` if unset. |
+| `MAX_DAILY_REPLICATE_USD` | `train-lora` (optional) | Daily Replicate spend ceiling in USD. New trainings hard-block (HTTP 429, `daily_budget_reached`) when today's logged spend + this train's estimated cost would exceed the cap. Estimates: pro ≈ $3.50, standard ≈ $2.00. Set to `0` or unset to disable. |
 
 ### Currently-set Lovable Cloud secrets (informational, from project metadata)
 

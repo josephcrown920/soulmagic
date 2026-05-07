@@ -49,6 +49,28 @@ Deno.serve(async (req) => {
       .from("loras").select("*").eq("id", loraId).single();
     if (loraErr || !lora) throw new Error(loraErr?.message ?? "LoRA not found");
 
+    // --- Daily Replicate spend ceiling ----------------------------------
+    // Hard-block new trainings once cumulative estimated spend for today
+    // crosses MAX_DAILY_REPLICATE_USD. Set to "0" or unset to disable.
+    const MAX_DAILY = parseFloat(Deno.env.get("MAX_DAILY_REPLICATE_USD") ?? "0");
+    // Estimated cost per train (FLUX LoRA on H100): pro ~$3.50, standard ~$2.00
+    const isProEstimate = lora.quality === "pro";
+    const ESTIMATED_COST = isProEstimate ? 3.5 : 2.0;
+    if (MAX_DAILY > 0) {
+      const { data: spent } = await admin.rpc("replicate_spend_today_usd");
+      const spentToday = Number(spent ?? 0);
+      if (spentToday + ESTIMATED_COST > MAX_DAILY) {
+        const msg = `Daily training budget reached ($${spentToday.toFixed(2)} of $${MAX_DAILY}). Try again tomorrow.`;
+        await admin.from("loras")
+          .update({ status: "failed", error_message: msg })
+          .eq("id", loraId);
+        return new Response(
+          JSON.stringify({ error: msg, code: "daily_budget_reached" }),
+          { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+        );
+      }
+    }
+
     await admin.from("loras")
       .update({ status: "training", progress: 5, error_message: null })
       .eq("id", loraId);
@@ -178,6 +200,15 @@ Deno.serve(async (req) => {
       replicate_model_name: safeName,
       progress: 25,
     }).eq("id", loraId);
+
+    // Record estimated spend for daily-ceiling tracking. We log on submit
+    // (not on completion) so concurrent kicks-off can't blow past the cap.
+    await admin.from("replicate_spend_log").insert({
+      user_id: lora.user_id,
+      lora_id: loraId,
+      kind: "training",
+      estimated_usd: ESTIMATED_COST,
+    });
 
     // Return immediately — webhook will finish the job.
     return new Response(
