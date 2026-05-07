@@ -201,6 +201,15 @@ Deno.serve(async (req) => {
       progress: 25,
     }).eq("id", loraId);
 
+    // Record estimated spend for daily-ceiling tracking. We log on submit
+    // (not on completion) so concurrent kicks-off can't blow past the cap.
+    await admin.from("replicate_spend_log").insert({
+      user_id: lora.user_id,
+      lora_id: loraId,
+      kind: "training",
+      estimated_usd: ESTIMATED_COST,
+    });
+
     // Return immediately — webhook will finish the job.
     return new Response(
       JSON.stringify({ ok: true, trainingId: training.id, status: "training" }),
