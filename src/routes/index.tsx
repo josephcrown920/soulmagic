@@ -14,6 +14,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import { MusicAdBanner, MusicAdFloatingPlayer } from "@/components/marketing/MusicAd";
+import { LeadCaptureForm } from "@/components/marketing/LeadCaptureForm";
 import heroCreator from "@/assets/hero-creator.jpg";
 import loraCoffeeWalk from "@/assets/lora-coffee-walk.jpg";
 import loraBookstore from "@/assets/lora-bookstore.jpg";
@@ -520,6 +521,26 @@ function Landing() {
         </Reveal>
       </section>
 
+      {/* Lead capture */}
+      <section className="border-t border-border/40 px-6 py-16 md:px-12">
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="text-xs uppercase tracking-widest text-primary">Early access</p>
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight md:text-3xl">
+            Get on the list. Train your first Soul on us.
+          </h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            We're letting in a small batch of creators each week. Drop your email and we'll send your invite + a free training credit.
+          </p>
+          <div className="mt-6">
+            <LeadCaptureForm
+              source="landing-bottom"
+              cta="Claim my invite"
+              helper="No spam. Unsubscribe in one click."
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="border-t border-border/40 px-6 py-10 md:px-12">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 text-xs text-muted-foreground md:flex-row">
@@ -527,10 +548,15 @@ function Landing() {
             <div className="h-5 w-5 rounded-md bg-gradient-primary" />
             <span>© {new Date().getFullYear()} Soul Studio</span>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
             <Link to="/pricing" className="hover:text-foreground">Pricing</Link>
             <Link to="/about" className="hover:text-foreground">About</Link>
             <Link to="/contact" className="hover:text-foreground">Contact</Link>
+            <span className="text-border">·</span>
+            <Link to="/terms" className="hover:text-foreground">Terms</Link>
+            <Link to="/privacy" className="hover:text-foreground">Privacy</Link>
+            <Link to="/cookies" className="hover:text-foreground">Cookies</Link>
+            <Link to="/refunds" className="hover:text-foreground">Refunds</Link>
           </div>
         </div>
       </footer>

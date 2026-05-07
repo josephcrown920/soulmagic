@@ -11,20 +11,25 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VibeRouteImport } from './routes/vibe'
 import { Route as TrainRouteImport } from './routes/train'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as StudioRouteImport } from './routes/studio'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as RefundsRouteImport } from './routes/refunds'
 import { Route as QueueRouteImport } from './routes/queue'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PresetsRouteImport } from './routes/presets'
 import { Route as LorasRouteImport } from './routes/loras'
 import { Route as LibraryRouteImport } from './routes/library'
 import { Route as GenerateRouteImport } from './routes/generate'
+import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssetsRouteImport } from './routes/assets'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminPaymentsRouteImport } from './routes/admin.payments'
+import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
 import { Route as ApiPublicPaystackWebhookRouteImport } from './routes/api/public/paystack/webhook'
 import { Route as ApiPublicHooksReplicateTrainingRouteImport } from './routes/api/public/hooks/replicate-training'
 import { Route as ApiPublicHooksProcessQueueRouteImport } from './routes/api/public/hooks/process-queue'
@@ -39,6 +44,11 @@ const TrainRoute = TrainRouteImport.update({
   path: '/train',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StudioRoute = StudioRouteImport.update({
   id: '/studio',
   path: '/studio',
@@ -49,9 +59,19 @@ const SettingsRoute = SettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RefundsRoute = RefundsRouteImport.update({
+  id: '/refunds',
+  path: '/refunds',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const QueueRoute = QueueRouteImport.update({
   id: '/queue',
   path: '/queue',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PricingRoute = PricingRouteImport.update({
@@ -77,6 +97,11 @@ const LibraryRoute = LibraryRouteImport.update({
 const GenerateRoute = GenerateRouteImport.update({
   id: '/generate',
   path: '/generate',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CookiesRoute = CookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -109,6 +134,11 @@ const AdminPaymentsRoute = AdminPaymentsRouteImport.update({
   path: '/admin/payments',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminLeadsRoute = AdminLeadsRouteImport.update({
+  id: '/admin/leads',
+  path: '/admin/leads',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicPaystackWebhookRoute =
   ApiPublicPaystackWebhookRouteImport.update({
     id: '/api/public/paystack/webhook',
@@ -134,16 +164,21 @@ export interface FileRoutesByFullPath {
   '/assets': typeof AssetsRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/generate': typeof GenerateRoute
   '/library': typeof LibraryRoute
   '/loras': typeof LorasRoute
   '/presets': typeof PresetsRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/queue': typeof QueueRoute
+  '/refunds': typeof RefundsRoute
   '/settings': typeof SettingsRoute
   '/studio': typeof StudioRoute
+  '/terms': typeof TermsRoute
   '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
+  '/admin/leads': typeof AdminLeadsRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/api/public/hooks/process-queue': typeof ApiPublicHooksProcessQueueRoute
   '/api/public/hooks/replicate-training': typeof ApiPublicHooksReplicateTrainingRoute
@@ -155,16 +190,21 @@ export interface FileRoutesByTo {
   '/assets': typeof AssetsRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/generate': typeof GenerateRoute
   '/library': typeof LibraryRoute
   '/loras': typeof LorasRoute
   '/presets': typeof PresetsRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/queue': typeof QueueRoute
+  '/refunds': typeof RefundsRoute
   '/settings': typeof SettingsRoute
   '/studio': typeof StudioRoute
+  '/terms': typeof TermsRoute
   '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
+  '/admin/leads': typeof AdminLeadsRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/api/public/hooks/process-queue': typeof ApiPublicHooksProcessQueueRoute
   '/api/public/hooks/replicate-training': typeof ApiPublicHooksReplicateTrainingRoute
@@ -177,16 +217,21 @@ export interface FileRoutesById {
   '/assets': typeof AssetsRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/generate': typeof GenerateRoute
   '/library': typeof LibraryRoute
   '/loras': typeof LorasRoute
   '/presets': typeof PresetsRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/queue': typeof QueueRoute
+  '/refunds': typeof RefundsRoute
   '/settings': typeof SettingsRoute
   '/studio': typeof StudioRoute
+  '/terms': typeof TermsRoute
   '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
+  '/admin/leads': typeof AdminLeadsRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/api/public/hooks/process-queue': typeof ApiPublicHooksProcessQueueRoute
   '/api/public/hooks/replicate-training': typeof ApiPublicHooksReplicateTrainingRoute
@@ -200,16 +245,21 @@ export interface FileRouteTypes {
     | '/assets'
     | '/auth'
     | '/contact'
+    | '/cookies'
     | '/generate'
     | '/library'
     | '/loras'
     | '/presets'
     | '/pricing'
+    | '/privacy'
     | '/queue'
+    | '/refunds'
     | '/settings'
     | '/studio'
+    | '/terms'
     | '/train'
     | '/vibe'
+    | '/admin/leads'
     | '/admin/payments'
     | '/api/public/hooks/process-queue'
     | '/api/public/hooks/replicate-training'
@@ -221,16 +271,21 @@ export interface FileRouteTypes {
     | '/assets'
     | '/auth'
     | '/contact'
+    | '/cookies'
     | '/generate'
     | '/library'
     | '/loras'
     | '/presets'
     | '/pricing'
+    | '/privacy'
     | '/queue'
+    | '/refunds'
     | '/settings'
     | '/studio'
+    | '/terms'
     | '/train'
     | '/vibe'
+    | '/admin/leads'
     | '/admin/payments'
     | '/api/public/hooks/process-queue'
     | '/api/public/hooks/replicate-training'
@@ -242,16 +297,21 @@ export interface FileRouteTypes {
     | '/assets'
     | '/auth'
     | '/contact'
+    | '/cookies'
     | '/generate'
     | '/library'
     | '/loras'
     | '/presets'
     | '/pricing'
+    | '/privacy'
     | '/queue'
+    | '/refunds'
     | '/settings'
     | '/studio'
+    | '/terms'
     | '/train'
     | '/vibe'
+    | '/admin/leads'
     | '/admin/payments'
     | '/api/public/hooks/process-queue'
     | '/api/public/hooks/replicate-training'
@@ -264,16 +324,21 @@ export interface RootRouteChildren {
   AssetsRoute: typeof AssetsRoute
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
+  CookiesRoute: typeof CookiesRoute
   GenerateRoute: typeof GenerateRoute
   LibraryRoute: typeof LibraryRoute
   LorasRoute: typeof LorasRoute
   PresetsRoute: typeof PresetsRoute
   PricingRoute: typeof PricingRoute
+  PrivacyRoute: typeof PrivacyRoute
   QueueRoute: typeof QueueRoute
+  RefundsRoute: typeof RefundsRoute
   SettingsRoute: typeof SettingsRoute
   StudioRoute: typeof StudioRoute
+  TermsRoute: typeof TermsRoute
   TrainRoute: typeof TrainRoute
   VibeRoute: typeof VibeRoute
+  AdminLeadsRoute: typeof AdminLeadsRoute
   AdminPaymentsRoute: typeof AdminPaymentsRoute
   ApiPublicHooksProcessQueueRoute: typeof ApiPublicHooksProcessQueueRoute
   ApiPublicHooksReplicateTrainingRoute: typeof ApiPublicHooksReplicateTrainingRoute
@@ -296,6 +361,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrainRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/studio': {
       id: '/studio'
       path: '/studio'
@@ -310,11 +382,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/refunds': {
+      id: '/refunds'
+      path: '/refunds'
+      fullPath: '/refunds'
+      preLoaderRoute: typeof RefundsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/queue': {
       id: '/queue'
       path: '/queue'
       fullPath: '/queue'
       preLoaderRoute: typeof QueueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -350,6 +436,13 @@ declare module '@tanstack/react-router' {
       path: '/generate'
       fullPath: '/generate'
       preLoaderRoute: typeof GenerateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cookies': {
+      id: '/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof CookiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -394,6 +487,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPaymentsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/leads': {
+      id: '/admin/leads'
+      path: '/admin/leads'
+      fullPath: '/admin/leads'
+      preLoaderRoute: typeof AdminLeadsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/paystack/webhook': {
       id: '/api/public/paystack/webhook'
       path: '/api/public/paystack/webhook'
@@ -424,16 +524,21 @@ const rootRouteChildren: RootRouteChildren = {
   AssetsRoute: AssetsRoute,
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
+  CookiesRoute: CookiesRoute,
   GenerateRoute: GenerateRoute,
   LibraryRoute: LibraryRoute,
   LorasRoute: LorasRoute,
   PresetsRoute: PresetsRoute,
   PricingRoute: PricingRoute,
+  PrivacyRoute: PrivacyRoute,
   QueueRoute: QueueRoute,
+  RefundsRoute: RefundsRoute,
   SettingsRoute: SettingsRoute,
   StudioRoute: StudioRoute,
+  TermsRoute: TermsRoute,
   TrainRoute: TrainRoute,
   VibeRoute: VibeRoute,
+  AdminLeadsRoute: AdminLeadsRoute,
   AdminPaymentsRoute: AdminPaymentsRoute,
   ApiPublicHooksProcessQueueRoute: ApiPublicHooksProcessQueueRoute,
   ApiPublicHooksReplicateTrainingRoute: ApiPublicHooksReplicateTrainingRoute,

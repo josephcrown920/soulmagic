@@ -25,7 +25,7 @@ const NAV = [
   { to: "/queue", label: "Queue", icon: ListVideo },
   { to: "/library", label: "Library", icon: Library },
   { to: "/presets", label: "Presets", icon: Sparkles },
-  { to: "/loras", label: "LoRAs", icon: Brain },
+  { to: "/loras", label: "Souls", icon: Brain },
   { to: "/generate", label: "Generate", icon: Wand },
   { to: "/vibe", label: "Vibe Matcher", icon: Wand2 },
   { to: "/assets", label: "Assets", icon: Images },
