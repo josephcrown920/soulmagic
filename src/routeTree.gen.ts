@@ -14,6 +14,7 @@ import { Route as TrainRouteImport } from './routes/train'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as StudioRouteImport } from './routes/studio'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as RefundsRouteImport } from './routes/refunds'
 import { Route as QueueRouteImport } from './routes/queue'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PricingRouteImport } from './routes/pricing'
@@ -55,6 +56,11 @@ const StudioRoute = StudioRouteImport.update({
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefundsRoute = RefundsRouteImport.update({
+  id: '/refunds',
+  path: '/refunds',
   getParentRoute: () => rootRouteImport,
 } as any)
 const QueueRoute = QueueRouteImport.update({
@@ -160,6 +166,7 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/queue': typeof QueueRoute
+  '/refunds': typeof RefundsRoute
   '/settings': typeof SettingsRoute
   '/studio': typeof StudioRoute
   '/terms': typeof TermsRoute
@@ -184,6 +191,7 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/queue': typeof QueueRoute
+  '/refunds': typeof RefundsRoute
   '/settings': typeof SettingsRoute
   '/studio': typeof StudioRoute
   '/terms': typeof TermsRoute
@@ -209,6 +217,7 @@ export interface FileRoutesById {
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/queue': typeof QueueRoute
+  '/refunds': typeof RefundsRoute
   '/settings': typeof SettingsRoute
   '/studio': typeof StudioRoute
   '/terms': typeof TermsRoute
@@ -235,6 +244,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/privacy'
     | '/queue'
+    | '/refunds'
     | '/settings'
     | '/studio'
     | '/terms'
@@ -259,6 +269,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/privacy'
     | '/queue'
+    | '/refunds'
     | '/settings'
     | '/studio'
     | '/terms'
@@ -283,6 +294,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/privacy'
     | '/queue'
+    | '/refunds'
     | '/settings'
     | '/studio'
     | '/terms'
@@ -308,6 +320,7 @@ export interface RootRouteChildren {
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
   QueueRoute: typeof QueueRoute
+  RefundsRoute: typeof RefundsRoute
   SettingsRoute: typeof SettingsRoute
   StudioRoute: typeof StudioRoute
   TermsRoute: typeof TermsRoute
@@ -354,6 +367,13 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/refunds': {
+      id: '/refunds'
+      path: '/refunds'
+      fullPath: '/refunds'
+      preLoaderRoute: typeof RefundsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/queue': {
@@ -492,6 +512,7 @@ const rootRouteChildren: RootRouteChildren = {
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
   QueueRoute: QueueRoute,
+  RefundsRoute: RefundsRoute,
   SettingsRoute: SettingsRoute,
   StudioRoute: StudioRoute,
   TermsRoute: TermsRoute,
