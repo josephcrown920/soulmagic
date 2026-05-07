@@ -11,9 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VibeRouteImport } from './routes/vibe'
 import { Route as TrainRouteImport } from './routes/train'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as StudioRouteImport } from './routes/studio'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as QueueRouteImport } from './routes/queue'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PresetsRouteImport } from './routes/presets'
 import { Route as LorasRouteImport } from './routes/loras'
@@ -39,6 +41,11 @@ const TrainRoute = TrainRouteImport.update({
   path: '/train',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StudioRoute = StudioRouteImport.update({
   id: '/studio',
   path: '/studio',
@@ -52,6 +59,11 @@ const SettingsRoute = SettingsRouteImport.update({
 const QueueRoute = QueueRouteImport.update({
   id: '/queue',
   path: '/queue',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PricingRoute = PricingRouteImport.update({
@@ -139,9 +151,11 @@ export interface FileRoutesByFullPath {
   '/loras': typeof LorasRoute
   '/presets': typeof PresetsRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/queue': typeof QueueRoute
   '/settings': typeof SettingsRoute
   '/studio': typeof StudioRoute
+  '/terms': typeof TermsRoute
   '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
   '/admin/payments': typeof AdminPaymentsRoute
@@ -160,9 +174,11 @@ export interface FileRoutesByTo {
   '/loras': typeof LorasRoute
   '/presets': typeof PresetsRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/queue': typeof QueueRoute
   '/settings': typeof SettingsRoute
   '/studio': typeof StudioRoute
+  '/terms': typeof TermsRoute
   '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
   '/admin/payments': typeof AdminPaymentsRoute
@@ -182,9 +198,11 @@ export interface FileRoutesById {
   '/loras': typeof LorasRoute
   '/presets': typeof PresetsRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/queue': typeof QueueRoute
   '/settings': typeof SettingsRoute
   '/studio': typeof StudioRoute
+  '/terms': typeof TermsRoute
   '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
   '/admin/payments': typeof AdminPaymentsRoute
@@ -205,9 +223,11 @@ export interface FileRouteTypes {
     | '/loras'
     | '/presets'
     | '/pricing'
+    | '/privacy'
     | '/queue'
     | '/settings'
     | '/studio'
+    | '/terms'
     | '/train'
     | '/vibe'
     | '/admin/payments'
@@ -226,9 +246,11 @@ export interface FileRouteTypes {
     | '/loras'
     | '/presets'
     | '/pricing'
+    | '/privacy'
     | '/queue'
     | '/settings'
     | '/studio'
+    | '/terms'
     | '/train'
     | '/vibe'
     | '/admin/payments'
@@ -247,9 +269,11 @@ export interface FileRouteTypes {
     | '/loras'
     | '/presets'
     | '/pricing'
+    | '/privacy'
     | '/queue'
     | '/settings'
     | '/studio'
+    | '/terms'
     | '/train'
     | '/vibe'
     | '/admin/payments'
@@ -269,9 +293,11 @@ export interface RootRouteChildren {
   LorasRoute: typeof LorasRoute
   PresetsRoute: typeof PresetsRoute
   PricingRoute: typeof PricingRoute
+  PrivacyRoute: typeof PrivacyRoute
   QueueRoute: typeof QueueRoute
   SettingsRoute: typeof SettingsRoute
   StudioRoute: typeof StudioRoute
+  TermsRoute: typeof TermsRoute
   TrainRoute: typeof TrainRoute
   VibeRoute: typeof VibeRoute
   AdminPaymentsRoute: typeof AdminPaymentsRoute
@@ -296,6 +322,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrainRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/studio': {
       id: '/studio'
       path: '/studio'
@@ -315,6 +348,13 @@ declare module '@tanstack/react-router' {
       path: '/queue'
       fullPath: '/queue'
       preLoaderRoute: typeof QueueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -429,9 +469,11 @@ const rootRouteChildren: RootRouteChildren = {
   LorasRoute: LorasRoute,
   PresetsRoute: PresetsRoute,
   PricingRoute: PricingRoute,
+  PrivacyRoute: PrivacyRoute,
   QueueRoute: QueueRoute,
   SettingsRoute: SettingsRoute,
   StudioRoute: StudioRoute,
+  TermsRoute: TermsRoute,
   TrainRoute: TrainRoute,
   VibeRoute: VibeRoute,
   AdminPaymentsRoute: AdminPaymentsRoute,
@@ -442,3 +484,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
