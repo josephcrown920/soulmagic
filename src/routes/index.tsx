@@ -14,6 +14,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import { MusicAdBanner, MusicAdFloatingPlayer } from "@/components/marketing/MusicAd";
+import { LeadCaptureForm } from "@/components/marketing/LeadCaptureForm";
 import heroCreator from "@/assets/hero-creator.jpg";
 import loraCoffeeWalk from "@/assets/lora-coffee-walk.jpg";
 import loraBookstore from "@/assets/lora-bookstore.jpg";
