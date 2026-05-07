@@ -29,6 +29,7 @@ import { Route as AssetsRouteImport } from './routes/assets'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminPaymentsRouteImport } from './routes/admin.payments'
+import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
 import { Route as ApiPublicPaystackWebhookRouteImport } from './routes/api/public/paystack/webhook'
 import { Route as ApiPublicHooksReplicateTrainingRouteImport } from './routes/api/public/hooks/replicate-training'
 import { Route as ApiPublicHooksProcessQueueRouteImport } from './routes/api/public/hooks/process-queue'
@@ -133,6 +134,11 @@ const AdminPaymentsRoute = AdminPaymentsRouteImport.update({
   path: '/admin/payments',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminLeadsRoute = AdminLeadsRouteImport.update({
+  id: '/admin/leads',
+  path: '/admin/leads',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicPaystackWebhookRoute =
   ApiPublicPaystackWebhookRouteImport.update({
     id: '/api/public/paystack/webhook',
@@ -172,6 +178,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
+  '/admin/leads': typeof AdminLeadsRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/api/public/hooks/process-queue': typeof ApiPublicHooksProcessQueueRoute
   '/api/public/hooks/replicate-training': typeof ApiPublicHooksReplicateTrainingRoute
@@ -197,6 +204,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
+  '/admin/leads': typeof AdminLeadsRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/api/public/hooks/process-queue': typeof ApiPublicHooksProcessQueueRoute
   '/api/public/hooks/replicate-training': typeof ApiPublicHooksReplicateTrainingRoute
@@ -223,6 +231,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/train': typeof TrainRoute
   '/vibe': typeof VibeRoute
+  '/admin/leads': typeof AdminLeadsRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/api/public/hooks/process-queue': typeof ApiPublicHooksProcessQueueRoute
   '/api/public/hooks/replicate-training': typeof ApiPublicHooksReplicateTrainingRoute
@@ -250,6 +259,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/train'
     | '/vibe'
+    | '/admin/leads'
     | '/admin/payments'
     | '/api/public/hooks/process-queue'
     | '/api/public/hooks/replicate-training'
@@ -275,6 +285,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/train'
     | '/vibe'
+    | '/admin/leads'
     | '/admin/payments'
     | '/api/public/hooks/process-queue'
     | '/api/public/hooks/replicate-training'
@@ -300,6 +311,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/train'
     | '/vibe'
+    | '/admin/leads'
     | '/admin/payments'
     | '/api/public/hooks/process-queue'
     | '/api/public/hooks/replicate-training'
@@ -326,6 +338,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   TrainRoute: typeof TrainRoute
   VibeRoute: typeof VibeRoute
+  AdminLeadsRoute: typeof AdminLeadsRoute
   AdminPaymentsRoute: typeof AdminPaymentsRoute
   ApiPublicHooksProcessQueueRoute: typeof ApiPublicHooksProcessQueueRoute
   ApiPublicHooksReplicateTrainingRoute: typeof ApiPublicHooksReplicateTrainingRoute
@@ -474,6 +487,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPaymentsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/leads': {
+      id: '/admin/leads'
+      path: '/admin/leads'
+      fullPath: '/admin/leads'
+      preLoaderRoute: typeof AdminLeadsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/paystack/webhook': {
       id: '/api/public/paystack/webhook'
       path: '/api/public/paystack/webhook'
@@ -518,6 +538,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   TrainRoute: TrainRoute,
   VibeRoute: VibeRoute,
+  AdminLeadsRoute: AdminLeadsRoute,
   AdminPaymentsRoute: AdminPaymentsRoute,
   ApiPublicHooksProcessQueueRoute: ApiPublicHooksProcessQueueRoute,
   ApiPublicHooksReplicateTrainingRoute: ApiPublicHooksReplicateTrainingRoute,
@@ -526,3 +547,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
