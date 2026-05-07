@@ -21,6 +21,7 @@ import { Route as PresetsRouteImport } from './routes/presets'
 import { Route as LorasRouteImport } from './routes/loras'
 import { Route as LibraryRouteImport } from './routes/library'
 import { Route as GenerateRouteImport } from './routes/generate'
+import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssetsRouteImport } from './routes/assets'
@@ -91,6 +92,11 @@ const GenerateRoute = GenerateRouteImport.update({
   path: '/generate',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CookiesRoute = CookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -146,6 +152,7 @@ export interface FileRoutesByFullPath {
   '/assets': typeof AssetsRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/generate': typeof GenerateRoute
   '/library': typeof LibraryRoute
   '/loras': typeof LorasRoute
@@ -169,6 +176,7 @@ export interface FileRoutesByTo {
   '/assets': typeof AssetsRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/generate': typeof GenerateRoute
   '/library': typeof LibraryRoute
   '/loras': typeof LorasRoute
@@ -193,6 +201,7 @@ export interface FileRoutesById {
   '/assets': typeof AssetsRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/generate': typeof GenerateRoute
   '/library': typeof LibraryRoute
   '/loras': typeof LorasRoute
@@ -218,6 +227,7 @@ export interface FileRouteTypes {
     | '/assets'
     | '/auth'
     | '/contact'
+    | '/cookies'
     | '/generate'
     | '/library'
     | '/loras'
@@ -241,6 +251,7 @@ export interface FileRouteTypes {
     | '/assets'
     | '/auth'
     | '/contact'
+    | '/cookies'
     | '/generate'
     | '/library'
     | '/loras'
@@ -264,6 +275,7 @@ export interface FileRouteTypes {
     | '/assets'
     | '/auth'
     | '/contact'
+    | '/cookies'
     | '/generate'
     | '/library'
     | '/loras'
@@ -288,6 +300,7 @@ export interface RootRouteChildren {
   AssetsRoute: typeof AssetsRoute
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
+  CookiesRoute: typeof CookiesRoute
   GenerateRoute: typeof GenerateRoute
   LibraryRoute: typeof LibraryRoute
   LorasRoute: typeof LorasRoute
@@ -392,6 +405,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GenerateRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cookies': {
+      id: '/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof CookiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -464,6 +484,7 @@ const rootRouteChildren: RootRouteChildren = {
   AssetsRoute: AssetsRoute,
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
+  CookiesRoute: CookiesRoute,
   GenerateRoute: GenerateRoute,
   LibraryRoute: LibraryRoute,
   LorasRoute: LorasRoute,
