@@ -548,6 +548,33 @@ export type Database = {
           },
         ]
       }
+      replicate_spend_log: {
+        Row: {
+          created_at: string
+          estimated_usd: number
+          id: string
+          kind: string
+          lora_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          estimated_usd: number
+          id?: string
+          kind?: string
+          lora_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          estimated_usd?: number
+          id?: string
+          kind?: string
+          lora_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       sponsored_tracks: {
         Row: {
           artist: string
@@ -796,6 +823,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      replicate_spend_today_usd: { Args: never; Returns: number }
     }
     Enums: {
       app_role: "admin" | "user"
