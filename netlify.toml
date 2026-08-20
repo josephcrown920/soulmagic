@@ -39,14 +39,8 @@
   to = "/index.html"
   status = 200
 
-# Sensible security headers for the SPA.
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "SAMEORIGIN"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+# Security headers are written to dist/_headers during the build. This keeps
+# normal routes self-framed and permits only configured Aurora origins on /embed.
 
 # Long-cache hashed build assets.
 [[headers]]

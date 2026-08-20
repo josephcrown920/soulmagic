@@ -30,7 +30,7 @@ type Job = {
   thumbnail_path: string | null;
 };
 
-function Studio() {
+export function Studio({ embedded = false }: { embedded?: boolean }) {
   const { user } = useAuth();
   const [presets, setPresets] = useState<Preset[]>([]);
   const [presetId, setPresetId] = useState<string>("");
@@ -124,7 +124,7 @@ function Studio() {
 
   return (
     <div className="mx-auto max-w-6xl space-y-8">
-      <UpgradeBanner kind="jobs" />
+      {!embedded && <UpgradeBanner kind="jobs" />}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Studio</h1>
@@ -198,14 +198,30 @@ function Studio() {
 
       {presets.length === 0 && (
         <div className="rounded-2xl border border-dashed border-border bg-card/40 p-6 text-sm text-muted-foreground">
-          You don't have any presets yet. Head to <a href="/presets" className="text-primary underline">Presets</a> to create your first style recipe.
+          You don't have any presets yet. Head to{" "}
+          <a
+            href="/presets"
+            target={embedded ? "_blank" : undefined}
+            rel={embedded ? "noopener noreferrer" : undefined}
+            className="text-primary underline"
+          >
+            Presets
+          </a>{" "}
+          to create your first style recipe.
         </div>
       )}
 
       <div>
         <div className="mb-3 flex items-center justify-between">
           <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">Recent jobs</h2>
-          <a href="/queue" className="text-xs text-primary">View queue →</a>
+          <a
+            href="/queue"
+            target={embedded ? "_blank" : undefined}
+            rel={embedded ? "noopener noreferrer" : undefined}
+            className="text-xs text-primary"
+          >
+            View queue →
+          </a>
         </div>
         {recent.length === 0 ? (
           <div className="rounded-2xl border border-border bg-card/40 p-6 text-sm text-muted-foreground">
