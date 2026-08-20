@@ -13,6 +13,7 @@ import { Route as VibeRouteImport } from './routes/vibe'
 import { Route as TrainRouteImport } from './routes/train'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as StudioRouteImport } from './routes/studio'
+import { Route as EmbedRouteImport } from './routes/embed'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as RefundsRouteImport } from './routes/refunds'
 import { Route as QueueRouteImport } from './routes/queue'
@@ -52,6 +53,11 @@ const TermsRoute = TermsRouteImport.update({
 const StudioRoute = StudioRouteImport.update({
   id: '/studio',
   path: '/studio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmbedRoute = EmbedRouteImport.update({
+  id: '/embed',
+  path: '/embed',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SettingsRoute = SettingsRouteImport.update({
@@ -535,6 +541,7 @@ const rootRouteChildren: RootRouteChildren = {
   RefundsRoute: RefundsRoute,
   SettingsRoute: SettingsRoute,
   StudioRoute: StudioRoute,
+  EmbedRoute: EmbedRoute,
   TermsRoute: TermsRoute,
   TrainRoute: TrainRoute,
   VibeRoute: VibeRoute,

@@ -1,4 +1,11 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import {
+  Outlet,
+  Link,
+  createRootRoute,
+  HeadContent,
+  Scripts,
+  useRouterState,
+} from "@tanstack/react-router";
 import { AuthProvider } from "@/lib/auth";
 import { Toaster } from "@/components/ui/sonner";
 import { SupportChat } from "@/components/SupportChat";
@@ -72,10 +79,15 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  const pathname = useRouterState({
+    select: (state) => state.location.pathname,
+  });
+  const embedded = pathname === "/embed";
+
   return (
     <AuthProvider>
       <Outlet />
-      <SupportChat />
+      {!embedded && <SupportChat />}
       <Toaster theme="dark" position="top-right" richColors />
     </AuthProvider>
   );
